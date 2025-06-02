@@ -1,0 +1,18 @@
+server:
+  error:
+    include-message: always
+
+spring:
+  datasource:
+    url: jdbc:h2:mem:aqua-db
+    username: sa
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+        format_sql: true
+  liquibase:
+    enabled: false
