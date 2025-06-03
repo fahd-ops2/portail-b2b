@@ -1,6 +1,10 @@
 server:
   error:
     include-message: always
+  port: 8089
+
+jwt:
+  secret: 7FSqWz6E4b3O4Y9+8FtWxZZlU2FEdJH9fnVm5Y2Y2yU=&
 
 spring:
   datasource:

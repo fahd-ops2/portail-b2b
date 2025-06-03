@@ -1,6 +1,6 @@
-package ma.akwa.portalrh.delivery.repository;
+package ma.akwa.portalrh.livraison.repository;
 
-import ma.akwa.portalrh.delivery.entities.Livraison;
+import ma.akwa.portalrh.livraison.entities.Livraison;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface LivraisonRepository extends JpaRepository<Livraison, Long> {
