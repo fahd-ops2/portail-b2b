@@ -3,6 +3,7 @@ package ma.akwa.portalrh.commande.entities;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "order_item")
 public class OrderItem {
 
     @Id
