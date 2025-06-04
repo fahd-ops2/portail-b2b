@@ -2,7 +2,7 @@ package ma.akwa.portalrh.auth.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
-import ma.akwa.portalrh.auth.enums.Role;
+import ma.akwa.portalrh.common.enums.Role;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,18 +13,10 @@ import java.util.Collections;
 @Entity
 @Getter @Setter @AllArgsConstructor @NoArgsConstructor
 @EqualsAndHashCode
+@Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "app_user")
 public class User implements UserDetails {
 
-//   // @SequenceGenerator(
-//            name = "user-sequence",
-//            sequenceName = "user-sequence",
-//            allocationSize = 1
-//    )
-//   // @GeneratedValue(
-//                    strategy = GenerationType.SEQUENCE,
-//                    generator = "user-sequence"
-//   // )
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String nom;

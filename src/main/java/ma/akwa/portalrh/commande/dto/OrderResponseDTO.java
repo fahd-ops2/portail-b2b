@@ -6,7 +6,6 @@ import java.util.List;
 public record OrderResponseDTO(
         Long id,
         String status,
-        boolean recurring,
         LocalDateTime createdAt,
         List<OrderLineDTO> items
 ) {

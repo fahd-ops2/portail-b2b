@@ -12,7 +12,7 @@ public class SwaggerConfig {
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
                 .info(new Info()
-                        .title("API de Gestion des Commandes")
+                        .title("API de portail b2b akwa")
                         .version("1.0.0")
                         .description("Documentation des endpoints REST"));
     }

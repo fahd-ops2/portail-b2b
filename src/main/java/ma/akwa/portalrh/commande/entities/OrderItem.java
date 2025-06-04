@@ -1,9 +1,16 @@
 package ma.akwa.portalrh.commande.entities;
 
 import jakarta.persistence.*;
+import lombok.*;
+import ma.akwa.portalrh.produit.entities.Produit;
 
 @Entity
 @Table(name = "order_item")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class OrderItem {
 
     @Id
@@ -13,7 +20,18 @@ public class OrderItem {
     @ManyToOne
     private Order order;
 
-    private Long productId;
+    @ManyToOne
+    private Produit produit;
 
+    @Column(name = "quantity")
     private Double quantity;
+
+    @Column(name = "unit_price")
+    private Double unitPrice;
+
+    @Column(name = "subtotal")
+    private Double subtotal;
+
+    @Column(name = "note", columnDefinition = "TEXT")
+    private String note;
 }

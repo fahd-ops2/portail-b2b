@@ -1,16 +1,22 @@
 package ma.akwa.portalrh.livreur.entities;
 
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import ma.akwa.portalrh.auth.entities.User;
 
+
+
 @Entity
-@Setter @Getter
-@NoArgsConstructor
-@AllArgsConstructor
+@Setter @Getter @NoArgsConstructor @AllArgsConstructor
+@Table(name = "livreurs")
 public class Livreur extends User {
-    private String telephone;
+
+    @Column(name = "phone_number")
+    private String phone;
+
+    @Column(name = "is_active")
+    private Boolean available = true;
 }
