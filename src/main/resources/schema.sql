@@ -62,3 +62,12 @@ CREATE TABLE order_item (
     CONSTRAINT fk_order_item_produit FOREIGN KEY (produit_id) REFERENCES produits(id)
 );
 
+-- Table: reclamation
+CREATE TABLE reclamation (
+                          id BIGINT AUTO_INCREMENT PRIMARY KEY,
+                          description VARCHAR(255),
+                          type VARCHAR(255),
+                          statut VARCHAR(255),
+                          date DATE
+);
+

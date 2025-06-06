@@ -2,6 +2,7 @@ package ma.akwa.portalrh.produit.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
+import ma.akwa.portalrh.reclamation.entities.Reclamation;
 
 @Getter
 @Setter
@@ -10,7 +11,7 @@ import lombok.*;
 @Builder
 @Entity
 @Table(name = "produits")
-public class Produit {
+public class Produit  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

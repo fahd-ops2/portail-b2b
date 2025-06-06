@@ -1,7 +1,7 @@
 package ma.akwa.portalrh.reclamation.repository;
-
-import ma.akwa.portalrh.produit.entities.Produit;
+import ma.akwa.portalrh.reclamation.entities.Reclamation;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface Repository extends JpaRepository<Produit, Long> {
+public interface ReclamationRepository extends JpaRepository<Reclamation, Long> {
+
 }
