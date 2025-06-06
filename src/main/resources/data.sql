@@ -33,6 +33,6 @@ INSERT INTO order_item (id, order_id, produit_id, quantity, unit_price, subtotal
 (3, 2, 2, 1, 100.0, 100.0, 'Fragile item');
 
 --insert reclamation
-INSERT INTO reclamation(id,description,type, statut, date) VALUES
+INSERT INTO reclamation(id,description,type, status, date) VALUES
 (1,'Le produit reçu est endommagé à louverture','Produit défectueux','PENDING','2025-06-06'),
 (2, 'Livraison retardée de 5 jours par rapport à la date prévue', 'Délai de livraison','IN_PROGRESS','2025-06-02');

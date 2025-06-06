@@ -1,13 +1,12 @@
 package ma.akwa.portalrh.reclamation.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter @Setter
 @Builder
 @Entity
 @Table(name = "reclamation")

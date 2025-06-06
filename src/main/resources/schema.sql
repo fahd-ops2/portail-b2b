@@ -67,7 +67,7 @@ CREATE TABLE reclamation (
                           id BIGINT AUTO_INCREMENT PRIMARY KEY,
                           description VARCHAR(255),
                           type VARCHAR(255),
-                          statut VARCHAR(255),
+                          status VARCHAR(255),
                           date DATE
 );
 
