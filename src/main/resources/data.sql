@@ -17,9 +17,9 @@ INSERT INTO clients (id, address) VALUES
 
 -- Insert produits
 INSERT INTO produits (id, nom, prix_unitaire, stock,description,type,image) VALUES
-(1, 'Gaz Cylinder 5kg', 50.0, 100 ,  'Bouteille de propane de haute qualité pour usage industriel','PROPANE','hfhfhfh'),
-(2, 'Gaz Cylinder 12kg', 100.0, 50, 'Bouteille de butane standard pour applications commerciales', 'PROPANE','hfhfhf'),
-(3, 'Gaz Cylinder 20kg', 150.0, 20,'fref','BUTANE','dhddhdh');
+(1, 'Bouteille de Propane', 50.0, 100 ,  'Bouteille de propane de haute qualité pour usage industriel','PROPANE','https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=300&h=200&fit=crop'''),
+(2, 'Gaz Cylinder 12kg', 100.0, 50, 'Bouteille de butane standard pour applications commerciales', 'PROPANE','https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=300&h=200&fit=crop'''),
+(3, 'Gaz Cylinder 20kg', 150.0, 20,'fref','BUTANE','https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=300&h=200&fit=crop''');
 
 
 -- Insert orders
