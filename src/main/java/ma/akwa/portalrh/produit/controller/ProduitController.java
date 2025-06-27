@@ -80,7 +80,7 @@ public class ProduitController {
             @Parameter(description = "Numéro de la page (0 = première page)", example = "0", required = true)
             @RequestParam int page) {
 
-        Pageable pageable = PageRequest.of(size, page);
+        Pageable pageable = PageRequest.of(page, size);
         return ResponseEntity.ok(produitService.getAllPaginated(pageable));
     }
 }

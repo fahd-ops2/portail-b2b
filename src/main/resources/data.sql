@@ -16,10 +16,11 @@ INSERT INTO clients (id, address) VALUES
 (4, '456 Rue de Fes, Rabat');
 
 -- Insert produits
-INSERT INTO produits (id, nom, prix_unitaire, stock) VALUES
-(1, 'Gaz Cylinder 5kg', 50.0, 100),
-(2, 'Gaz Cylinder 12kg', 100.0, 50),
-(3, 'Gaz Cylinder 20kg', 150.0, 20);
+INSERT INTO produits (id, nom, prix_unitaire, stock,description,type,image) VALUES
+(1, 'Gaz Cylinder 5kg', 50.0, 100 ,  'Bouteille de propane de haute qualité pour usage industriel','PROPANE','hfhfhfh'),
+(2, 'Gaz Cylinder 12kg', 100.0, 50, 'Bouteille de butane standard pour applications commerciales', 'PROPANE','hfhfhf'),
+(3, 'Gaz Cylinder 20kg', 150.0, 20,'fref','BUTANE','dhddhdh');
+
 
 -- Insert orders
 INSERT INTO orders (id, client_id, created_at, status, delivery_address, scheduled_for, delivered_at, note, total_amount) VALUES

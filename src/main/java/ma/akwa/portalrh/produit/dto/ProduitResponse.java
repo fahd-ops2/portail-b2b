@@ -1,6 +1,7 @@
 package ma.akwa.portalrh.produit.dto;
 
 import lombok.*;
+import ma.akwa.portalrh.common.enums.Type;
 
 @Getter
 @Setter
@@ -12,4 +13,7 @@ public class ProduitResponse {
     private String nom;
     private float prixUnitaire;
     private int stock;
+    private String description;
+    private Type type;
+    private String image;
 }

@@ -30,8 +30,18 @@ CREATE TABLE produits (
   id BIGINT AUTO_INCREMENT PRIMARY KEY,
   nom VARCHAR(255),
   prix_unitaire DOUBLE,
-  stock INT
+  stock INT,
+  description  VARCHAR(255),
+  type VARCHAR(255),
+  image VARCHAR(255)
+
 );
+-- Remplacer l'instruction problématique
+ALTER TABLE produits ALTER COLUMN nom VARCHAR(255) NOT NULL;
+ALTER TABLE produits ALTER COLUMN prix_unitaire DOUBLE NOT NULL;
+ALTER TABLE produits ALTER COLUMN stock INT NOT NULL;
+ALTER TABLE produits ALTER COLUMN stock SET DEFAULT 0;
+
 
 -- Table: orders
 CREATE TABLE orders (
@@ -48,7 +58,13 @@ CREATE TABLE orders (
     CONSTRAINT fk_orders_client FOREIGN KEY (client_id) REFERENCES clients(id)
 );
 
--- Table: order_item
+-- Remplacer l'instruction Order
+ALTER TABLE orders ALTER COLUMN status VARCHAR(50) NOT NULL;
+ALTER TABLE orders ALTER COLUMN total_amount SET DATA TYPE DOUBLE;
+ALTER TABLE orders ALTER COLUMN total_amount SET NOT NULL;
+ALTER TABLE orders ALTER COLUMN total_amount SET DEFAULT 0.0;
+
+
 CREATE TABLE order_item (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     order_id BIGINT NOT NULL,
@@ -59,8 +75,13 @@ CREATE TABLE order_item (
     note TEXT,
 
     CONSTRAINT fk_order_item_order FOREIGN KEY (order_id) REFERENCES orders(id),
-    CONSTRAINT fk_order_item_produit FOREIGN KEY (produit_id) REFERENCES produits(id)
+    CONSTRAINT fk_order_item_produit FOREIGN KEY (produit_id) REFERENCES produits(id) ON DELETE CASCADE
 );
+
+-- Remplacer l'instruction problématique ORDER_ITEM
+ALTER TABLE order_item ALTER COLUMN quantity DOUBLE NOT NULL;
+ALTER TABLE order_item ALTER COLUMN unit_price DOUBLE NOT NULL;
+ALTER TABLE order_item ALTER COLUMN subtotal DOUBLE NOT NULL;
 
 -- Table: reclamation
 CREATE TABLE reclamation (
