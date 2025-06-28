@@ -40,7 +40,7 @@ public class ProduitController {
     @PutMapping("/{id}")
     public ResponseEntity<ProduitResponse> update(
             @Parameter(description = "ID du produit à mettre à jour", required = true)
-            @PathVariable Long id,
+            @PathVariable String id,
             @Parameter(description = "Données mises à jour du produit", required = true)
             @RequestBody ProduitRequest request) {
         return ResponseEntity.ok(produitService.update(id, request));
@@ -54,7 +54,7 @@ public class ProduitController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(
             @Parameter(description = "ID du produit à supprimer", required = true)
-            @PathVariable Long id) {
+            @PathVariable String id) {
         produitService.delete(id);
         return ResponseEntity.noContent().build();
     }
@@ -67,7 +67,7 @@ public class ProduitController {
     @GetMapping("/{id}")
     public ResponseEntity<ProduitResponse> getById(
             @Parameter(description = "ID du produit à récupérer", required = true)
-            @PathVariable Long id) {
+            @PathVariable String id) {
         return ResponseEntity.ok(produitService.getById(id));
     }
 

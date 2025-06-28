@@ -27,15 +27,16 @@ CREATE TABLE clients (
 
 -- Table: produits
 CREATE TABLE produits (
-  id BIGINT AUTO_INCREMENT PRIMARY KEY,
+  id VARCHAR(36) PRIMARY KEY,
   nom VARCHAR(255),
   prix_unitaire DOUBLE,
   stock INT,
-  description  VARCHAR(255),
+  description VARCHAR(255),
   type VARCHAR(255),
   image VARCHAR(255)
-
 );
+
+
 -- Remplacer l'instruction problématique
 ALTER TABLE produits ALTER COLUMN nom VARCHAR(255) NOT NULL;
 ALTER TABLE produits ALTER COLUMN prix_unitaire DOUBLE NOT NULL;
@@ -68,7 +69,7 @@ ALTER TABLE orders ALTER COLUMN total_amount SET DEFAULT 0.0;
 CREATE TABLE order_item (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     order_id BIGINT NOT NULL,
-    produit_id BIGINT NOT NULL,
+    produit_id VARCHAR(36) NOT NULL,
     quantity DOUBLE,
     unit_price DOUBLE,
     subtotal DOUBLE,

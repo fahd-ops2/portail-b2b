@@ -5,6 +5,8 @@ import lombok.*;
 import ma.akwa.portalrh.common.enums.Type;
 import ma.akwa.portalrh.reclamation.entities.Reclamation;
 
+import java.util.UUID;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -15,8 +17,7 @@ import ma.akwa.portalrh.reclamation.entities.Reclamation;
 public class Produit  {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private String id;
 
     @Column
     private String nom;
@@ -24,6 +25,7 @@ public class Produit  {
     private float prixUnitaire;
     @Column
     private int stock;
+
     @Enumerated(EnumType.STRING)
     @Column
     private Type type;
@@ -31,4 +33,11 @@ public class Produit  {
     private String description;
     @Column
     private String image;
+
+    @PrePersist
+    public void generateId() {
+        if (this.id == null) {
+            this.id = UUID.randomUUID().toString();
+        }
+    }
 }

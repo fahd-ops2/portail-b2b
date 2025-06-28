@@ -26,12 +26,12 @@ public class ProduitServiceImpl implements ProduitService {
     }
 
     @Override
-    public ProduitResponse update(Long id, ProduitRequest request) {
+    public ProduitResponse update(String id, ProduitRequest request) {
         return null;
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(String id) {
         Produit produit = produitRepository
                     .findById(id)
                     .orElseThrow(()-> new RuntimeException("product "+ id +" not found"));
@@ -39,7 +39,7 @@ public class ProduitServiceImpl implements ProduitService {
     }
 
     @Override
-    public ProduitResponse getById(Long id) {
+    public ProduitResponse getById(String id) {
         Produit produit = produitRepository
                 .findById(id)
                 .orElseThrow(()-> new RuntimeException("product "+ id +" not found"));;

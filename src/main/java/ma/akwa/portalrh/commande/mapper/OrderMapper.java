@@ -52,7 +52,7 @@ public interface OrderMapper {
 
     // Custom mapping for productId -> Produit entity (simplified: only sets id)
     @Named("mapProductIdToProduit")
-    default Produit mapProductIdToProduit(Long productId) {
+    default Produit mapProductIdToProduit(String productId) {
         if (productId == null) {
             return null;
         }

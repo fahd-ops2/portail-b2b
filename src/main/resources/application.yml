@@ -5,7 +5,7 @@ logging:
 server:
   error:
     include-message: always
-  port: 8089
+  port: 8090
 
 jwt:
   secret: i9vWD++Wh7XYgQROV1EO0B2KphmDo7r0nC2GR9ErPHM=

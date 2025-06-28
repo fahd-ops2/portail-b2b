@@ -5,5 +5,5 @@ import java.util.List;
 public record OrderRequestDTO(
         List<OrderLineDTO> items
 ) {
-    public record OrderLineDTO(Long productId, Double quantity) {}
+    public record OrderLineDTO(String productId, Double quantity) {}
 }

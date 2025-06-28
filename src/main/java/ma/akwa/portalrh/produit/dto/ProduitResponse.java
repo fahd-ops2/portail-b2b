@@ -9,7 +9,7 @@ import ma.akwa.portalrh.common.enums.Type;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProduitResponse {
-    private Long id;
+    private String id;
     private String nom;
     private float prixUnitaire;
     private int stock;

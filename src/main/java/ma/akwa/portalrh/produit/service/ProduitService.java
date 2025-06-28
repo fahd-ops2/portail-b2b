@@ -9,8 +9,8 @@ import java.util.List;
 
 public interface ProduitService {
     ProduitResponse create(ProduitRequest request);
-    ProduitResponse update(Long id, ProduitRequest request);
-    void delete(Long id);
-    ProduitResponse getById(Long id);
+    ProduitResponse update(String id, ProduitRequest request);
+    void delete(String id);
+    ProduitResponse getById(String id);
     Page<ProduitResponse> getAllPaginated(Pageable pageable);
 }
