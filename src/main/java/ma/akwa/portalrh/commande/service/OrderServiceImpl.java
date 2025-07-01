@@ -1,6 +1,5 @@
 package ma.akwa.portalrh.commande.service;
 
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import ma.akwa.portalrh.client.entities.Client;
 import ma.akwa.portalrh.client.repository.ClientRepository;
@@ -16,9 +15,12 @@ import ma.akwa.portalrh.produit.repository.ProduitRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -30,6 +32,7 @@ public class OrderServiceImpl implements OrderService{
     private final ProduitRepository produitRepository;
 
     @Override
+    @Transactional
     public OrderResponseDTO createOrder(OrderRequestDTO dto){
         // Valider le client
         Client client = clientRepository.findById(dto.clientId())
@@ -40,24 +43,29 @@ public class OrderServiceImpl implements OrderService{
         order.setClient(client);
 
         // Valider et configurer les OrderItems
-        if (dto.items() != null) {
-            for (OrderItem item : order.getItems()) {
-                Produit produit = produitRepository.findById(item.getProduit().getId())
-                        .orElseThrow(() -> new IllegalArgumentException("Produit non trouvé: " + item.getProduit().getId()));
-                item.setProduit(produit);
-                item.setOrder(order);
-                item.setUnitPrice((double) produit.getPrixUnitaire()); // Suppose que Produit a une méthode getPrix()
-                item.setSubtotal(item.getQuantity() * item.getUnitPrice());
-            }
-            // Calculer total_amount
-            order.setTotalAmount(order.getItems().stream()
-                    .mapToDouble(OrderItem::getSubtotal)
-                    .sum());
-        } else {
-            order.setItems(new ArrayList<>());
+        if (Objects.isNull(dto.items())) {
+            order.setItems(Collections.emptyList());
         }
+
+        for (OrderItem item : order.getItems()) {
+
+            Produit produit = produitRepository.findById(item.getProduit().getId())
+                    .orElseThrow(() -> new IllegalArgumentException("Produit non trouvé: " + item.getProduit().getId()));
+
+            item.setProduit(produit);
+            item.setOrder(order);
+            item.setUnitPrice((double) produit.getPrixUnitaire()); // Suppose que Produit a une méthode getPrix()
+            item.setSubtotal(item.getQuantity() * item.getUnitPrice());
+
+        }
+
+        // Calculer total_amount
+        order.setTotalAmount(order.getItems().stream()
+                .mapToDouble(OrderItem::getSubtotal)
+                .sum());
+
         // Définir le statut par défaut si non fourni
-        if (order.getStatus() == null) {
+        if (Objects.isNull(order.getStatus())) {
             order.setStatus(OrderStatus.EN_ATTENTE);
         }
 
@@ -65,26 +73,26 @@ public class OrderServiceImpl implements OrderService{
         Order savedOrder = orderRepository.save(order);
         return orderMapper.toOrderResponseDTO(savedOrder);
 
-
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Page<OrderResponseDTO> listOrdersByCompany() {
         // TODO: Implémenter le filtrage par entreprise (ex. via SecurityContextHolder ou champ dans Client)
         return orderRepository.findAll(PageRequest.of(0, 10))
                 .map(orderMapper::toOrderResponseDTO);
     }
 
-    @Transactional
     @Override
+    @Transactional(readOnly = true)
     public OrderResponseDTO getOrder(Long orderId) {
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new IllegalArgumentException("Commande non trouvée"));
         return orderMapper.toOrderResponseDTO(order);
     }
 
-    @Transactional
     @Override
+    @Transactional
     public OrderResponseDTO cancelOrder(Long orderId){
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new IllegalArgumentException("Commande non trouvée"));
@@ -117,16 +125,11 @@ public class OrderServiceImpl implements OrderService{
     }
 
     private boolean isValidStatusTransition(OrderStatus current, OrderStatus next) {
-        switch (current) {
-            case EN_ATTENTE:
-                return next == OrderStatus.EN_COURS || next == OrderStatus.ANNULEE;
-            case EN_COURS:
-                return next == OrderStatus.LIVREE || next == OrderStatus.ANNULEE;
-            case LIVREE:
-            case ANNULEE:
-                return false; // Pas de transition possible
-            default:
-                return false;
-        }
+        return switch (current) {
+            case EN_ATTENTE -> next == OrderStatus.EN_COURS || next == OrderStatus.ANNULEE;
+            case EN_COURS -> next == OrderStatus.LIVREE || next == OrderStatus.ANNULEE;
+            case LIVREE, ANNULEE -> false;
+            default -> false;
+        };
     }
 }

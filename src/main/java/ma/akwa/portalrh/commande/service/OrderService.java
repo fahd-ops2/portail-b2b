@@ -1,6 +1,5 @@
 package ma.akwa.portalrh.commande.service;
 
-import jakarta.transaction.Transactional;
 import ma.akwa.portalrh.commande.dto.OrderRequestDTO;
 import ma.akwa.portalrh.commande.dto.OrderResponseDTO;
 import ma.akwa.portalrh.common.enums.OrderStatus;
@@ -16,6 +15,5 @@ public interface OrderService {
 
     OrderResponseDTO cancelOrder(Long orderId);
 
-    @Transactional
     OrderResponseDTO updateStatus(Long orderId, OrderStatus newStatus);
 }
