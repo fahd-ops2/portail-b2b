@@ -49,7 +49,7 @@ CREATE TABLE orders (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     client_id BIGINT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    status VARCHAR(50),
+    status VARCHAR(50) NOT NULL DEFAULT 'EN_ATTENTE' CHECK (status IN ('EN_ATTENTE', 'EN_COURS', 'LIVREE', 'ANNULEE')) ,
     delivery_address TEXT,
     scheduled_for TIMESTAMP,
     delivered_at TIMESTAMP,

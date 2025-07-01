@@ -24,8 +24,8 @@ INSERT INTO produits (id, nom, prix_unitaire, stock,description,type,image) VALU
 
 -- Insert orders
 INSERT INTO orders (id, client_id, created_at, status, delivery_address, scheduled_for, delivered_at, note, total_amount) VALUES
-(1, 2, CURRENT_TIMESTAMP, 'PENDING', '123 Main Street, Casablanca', CURRENT_TIMESTAMP + INTERVAL '1' DAY, NULL, 'Urgent delivery', 150.0),
-(2, 4, CURRENT_TIMESTAMP, 'DELIVERED', '456 Rue de Fes, Rabat', CURRENT_TIMESTAMP - INTERVAL '3' DAY, CURRENT_TIMESTAMP - INTERVAL '1' DAY, NULL, 100.0);
+(1, 2, CURRENT_TIMESTAMP, 'EN_ATTENTE', '123 Main Street, Casablanca', CURRENT_TIMESTAMP + INTERVAL '1' DAY, NULL, 'Urgent delivery', 150.0),
+(2, 4, CURRENT_TIMESTAMP, 'EN_ATTENTE', '456 Rue de Fes, Rabat', CURRENT_TIMESTAMP - INTERVAL '3' DAY, CURRENT_TIMESTAMP - INTERVAL '1' DAY, NULL, 100.0);
 
 -- Insert order_items
 INSERT INTO order_item (id, order_id, produit_id, quantity, unit_price, subtotal, note) VALUES

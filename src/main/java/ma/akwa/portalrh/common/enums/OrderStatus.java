@@ -1,9 +1,9 @@
 package ma.akwa.portalrh.common.enums;
 
 public enum OrderStatus {
-    PENDING,
+    EN_ATTENTE,
     CONFIRMED,
-    IN_DELIVERY,
-    DELIVERED,
-    CANCELLED
+    EN_COURS,
+    LIVREE,
+    ANNULEE
 }

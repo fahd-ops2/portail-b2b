@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import ma.akwa.portalrh.commande.dto.OrderRequestDTO;
 import ma.akwa.portalrh.commande.dto.OrderResponseDTO;
 import ma.akwa.portalrh.commande.service.OrderService;
+import ma.akwa.portalrh.common.enums.OrderStatus;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
@@ -51,12 +52,29 @@ public class OrderController {
     @Operation(summary = "Annuler une commande par son ID")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Commande annulée avec succès"),
-            @ApiResponse(responseCode = "404", description = "Commande non trouvée")
+            @ApiResponse(responseCode = "404", description = "Commande non trouvée"),
+            @ApiResponse(responseCode = "400", description = "Impossible d'annuler la commande")
     })
-    @GetMapping("/{id}/cancel")
+    @PutMapping("/{id}/cancel")
     public OrderResponseDTO cancelOrder(
             @Parameter(description = "ID de la commande à annuler", required = true)
             @PathVariable("id") Long orderId){
         return orderService.cancelOrder(orderId);
+    }
+
+    @Operation(summary = "Mettre à jour le statut d'une commande")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Statut mis à jour avec succès"),
+            @ApiResponse(responseCode = "404", description = "Commande non trouvée"),
+            @ApiResponse(responseCode = "400", description = "Transition de statut invalide")
+    })
+    @PutMapping("/{id}/status")
+    public OrderResponseDTO updateStatus(
+            @Parameter(description = "ID de la commande", required = true)
+            @PathVariable("id") Long orderId,
+            @Parameter(description = "Nouveau statut de la commande", required = true)
+            @RequestBody String status) {
+        OrderStatus orderStatus = OrderStatus.valueOf( status);
+        return orderService.updateStatus(orderId, orderStatus);
     }
 }
