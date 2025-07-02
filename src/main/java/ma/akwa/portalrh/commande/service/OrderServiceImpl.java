@@ -131,7 +131,6 @@ public class OrderServiceImpl implements OrderService{
         return switch (current) {
             case EN_ATTENTE -> next == OrderStatus.EN_COURS || next == OrderStatus.ANNULEE;
             case EN_COURS -> next == OrderStatus.LIVREE || next == OrderStatus.ANNULEE;
-            case LIVREE, ANNULEE -> false;
             default -> false;
         };
     }

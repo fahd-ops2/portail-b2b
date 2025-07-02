@@ -10,6 +10,7 @@ public record OrderRequestDTO(
         String deliveryAddress,
         LocalDateTime scheduledFor,
         String note,
+        LocalDateTime deliveredAt,
         Double totalAmount,
         OrderStatus status,
         List<OrderLineDTO> items
