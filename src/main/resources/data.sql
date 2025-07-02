@@ -23,15 +23,15 @@ INSERT INTO produits (id, nom, prix_unitaire, stock,description,type,image) VALU
 
 
 -- Insert orders
-INSERT INTO orders (id, client_id, created_at, status, delivery_address, scheduled_for, delivered_at, note, total_amount) VALUES
-(1, 2, CURRENT_TIMESTAMP, 'EN_ATTENTE', '123 Main Street, Casablanca', CURRENT_TIMESTAMP + INTERVAL '1' DAY, NULL, 'Urgent delivery', 150.0),
-(2, 4, CURRENT_TIMESTAMP, 'EN_ATTENTE', '456 Rue de Fes, Rabat', CURRENT_TIMESTAMP - INTERVAL '3' DAY, CURRENT_TIMESTAMP - INTERVAL '1' DAY, NULL, 100.0);
+INSERT INTO orders ( client_id, created_at, status, delivery_address, scheduled_for, delivered_at, note, total_amount) VALUES
+ (2, CURRENT_TIMESTAMP, 'EN_ATTENTE', '123 Main Street, Casablanca', CURRENT_TIMESTAMP + INTERVAL '1' DAY, NULL, 'Urgent delivery', 150.0),
+(4, CURRENT_TIMESTAMP, 'EN_ATTENTE', '150 Main Street, Settat', CURRENT_TIMESTAMP + INTERVAL '3' DAY, NULL, 'URGENT delivery',  100.0);
 
 -- Insert order_items
-INSERT INTO order_item (id, order_id, produit_id, quantity, unit_price, subtotal, note) VALUES
-(1, 1, 1, 2, 50.0, 100.0, 'Handle with care'),
-(2, 1, 3, 1, 150.0, 150.0, ''),
-(3, 2, 2, 1, 100.0, 100.0, 'Fragile item');
+INSERT INTO order_item ( order_id, produit_id, quantity, unit_price, subtotal, note) VALUES
+( 1, 1, 2, 50.0, 100.0, 'Handle with care'),
+( 1, 3, 1, 150.0, 150.0, ''),
+( 2, 2, 1, 100.0, 100.0, 'Fragile item');
 
 --insert reclamation
 INSERT INTO reclamation(id,description,type, status, date) VALUES

@@ -60,6 +60,7 @@ CREATE TABLE orders (
 );
 
 -- Remplacer l'instruction Order
+ALTER TABLE orders ALTER COLUMN id RESTART WITH (SELECT MAX(id) + 1 FROM orders);
 ALTER TABLE orders ALTER COLUMN status VARCHAR(50) NOT NULL;
 ALTER TABLE orders ALTER COLUMN total_amount SET DATA TYPE DOUBLE;
 ALTER TABLE orders ALTER COLUMN total_amount SET NOT NULL;
@@ -80,6 +81,7 @@ CREATE TABLE order_item (
 );
 
 -- Remplacer l'instruction problématique ORDER_ITEM
+ALTER TABLE order_item ALTER COLUMN id RESTART WITH (SELECT MAX(id) + 1 FROM order_item);
 ALTER TABLE order_item ALTER COLUMN quantity DOUBLE NOT NULL;
 ALTER TABLE order_item ALTER COLUMN unit_price DOUBLE NOT NULL;
 ALTER TABLE order_item ALTER COLUMN subtotal DOUBLE NOT NULL;

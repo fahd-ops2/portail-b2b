@@ -8,11 +8,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import ma.akwa.portalrh.client.dto.ClientRequest;
 import ma.akwa.portalrh.client.dto.ClientResponse;
-import ma.akwa.portalrh.client.entities.Client;
-import ma.akwa.portalrh.client.repository.ClientRepository;
 import ma.akwa.portalrh.client.service.ClientService;
-import ma.akwa.portalrh.produit.dto.ProduitRequest;
-import ma.akwa.portalrh.produit.dto.ProduitResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -68,11 +64,17 @@ public class ClientController {
             @ApiResponse(responseCode = "200", description = "Client récupéré"),
             @ApiResponse(responseCode = "404", description = "Client non trouvé")
     })
-    @GetMapping("/{id}")
+   /* @GetMapping("/{id}")
     public ResponseEntity<ClientResponse> getById(
             @Parameter(description = "ID du client à récupérer", required = true)
             @PathVariable Long id) {
         return ResponseEntity.ok(clientService.getById(id));
+    }*/
+    @GetMapping("/{id}")
+    public ClientResponse getOrderById(
+            @Parameter(description = "ID de la commande à récupérer", required = true)
+            @PathVariable("id") Long id){
+        return clientService.getById(id);
     }
 
 

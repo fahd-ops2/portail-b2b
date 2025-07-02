@@ -6,12 +6,16 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
+import ma.akwa.portalrh.commande.dto.BulkOrderRequestDTO;
 import ma.akwa.portalrh.commande.dto.OrderRequestDTO;
 import ma.akwa.portalrh.commande.dto.OrderResponseDTO;
 import ma.akwa.portalrh.commande.service.OrderService;
 import ma.akwa.portalrh.common.enums.OrderStatus;
 import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/order")
@@ -30,12 +34,26 @@ public class OrderController {
         return orderService.createOrder(orderRequestDTO);
     }
 
+    @Operation(summary = "Créer plusieurs commandes")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Commandes créées avec succès"),
+            @ApiResponse(responseCode = "400", description = "Données de la requête invalides")
+    })
+    @PostMapping("/bulk")
+    public ResponseEntity<List<OrderResponseDTO>> createOrders(
+            @Parameter(description = "Liste des commandes à créer", required = true)
+            @RequestBody BulkOrderRequestDTO bulkOrderRequestDTO) {
+        List<OrderResponseDTO> responses = orderService.createOrders(bulkOrderRequestDTO);
+        return ResponseEntity.ok(responses);
+    }
+
     @Operation(summary = "Lister les commandes de l'entreprise")
     @ApiResponse(responseCode = "200", description = "Liste des commandes récupérée avec succès")
     @GetMapping
-    public Page<OrderResponseDTO> getOrdersByCompany(){
+    public Page<OrderResponseDTO> getOrdersByCompany() {
         return orderService.listOrdersByCompany();
     }
+
 
     @Operation(summary = "Obtenir une commande par son ID")
     @ApiResponses({

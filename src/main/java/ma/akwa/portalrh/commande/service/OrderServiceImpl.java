@@ -3,6 +3,7 @@ package ma.akwa.portalrh.commande.service;
 import lombok.RequiredArgsConstructor;
 import ma.akwa.portalrh.client.entities.Client;
 import ma.akwa.portalrh.client.repository.ClientRepository;
+import ma.akwa.portalrh.commande.dto.BulkOrderRequestDTO;
 import ma.akwa.portalrh.commande.dto.OrderRequestDTO;
 import ma.akwa.portalrh.commande.dto.OrderResponseDTO;
 import ma.akwa.portalrh.commande.entities.Order;
@@ -20,7 +21,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -131,5 +134,12 @@ public class OrderServiceImpl implements OrderService{
             case LIVREE, ANNULEE -> false;
             default -> false;
         };
+    }
+    @Transactional
+    @Override
+    public List<OrderResponseDTO> createOrders(BulkOrderRequestDTO bulkDto) {
+        return bulkDto.orders().stream()
+                .map(this::createOrder)
+                .collect(Collectors.toList());
     }
 }

@@ -14,5 +14,14 @@ public record OrderRequestDTO(
         OrderStatus status,
         List<OrderLineDTO> items
 ) {
-    public record OrderLineDTO(String productId, Double quantity, String note) {}
+    public record OrderLineDTO(
+            String productId,
+            Double quantity,
+            String note,
+            Double unitPrice,
+            Double subtotal
+    ) {}
 }
+
+
+
