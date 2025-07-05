@@ -2,11 +2,14 @@ package ma.akwa.portalrh.livreur.service;
 
 
 import lombok.RequiredArgsConstructor;
+import ma.akwa.portalrh.client.entities.Client;
+import ma.akwa.portalrh.common.enums.Role;
 import ma.akwa.portalrh.livreur.dto.LivreurRequest;
 import ma.akwa.portalrh.livreur.dto.LivreurResponse;
 import ma.akwa.portalrh.livreur.entities.Livreur;
 import ma.akwa.portalrh.livreur.mapper.LivreurMapper;
 import ma.akwa.portalrh.livreur.repository.LivreurRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,6 +21,7 @@ public class LivreurServiceImpl implements LivreurService {
 
     private final LivreurRepository livreurRepository;
     private final LivreurMapper livreurMapper;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public List<LivreurResponse> findAll() {
@@ -35,6 +39,11 @@ public class LivreurServiceImpl implements LivreurService {
     @Override
     public LivreurResponse create(LivreurRequest request) {
         Livreur livreur = livreurMapper.toEntity(request);
+        livreur.setPassword(passwordEncoder.encode(request.password()));
+        livreur.setRole(Role.LIVREUR); // Définir le rôle par défaut pour les clients
+        livreur.setLocked(false); // Compte non verrouillé par défaut
+        livreur.setEnabled(true); // Compte activé par défaut
+        Livreur createdClient = livreurRepository.save(livreur);
         livreur = livreurRepository.save(livreur);
         return livreurMapper.toResponse(livreur);
     }

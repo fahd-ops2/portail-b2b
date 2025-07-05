@@ -23,6 +23,15 @@ public class LivreurController {
 
     private final LivreurService livreurService;
 
+    @Operation(summary = "Créer un nouveau livreur")
+    @ApiResponse(responseCode = "201", description = "Livreur créé avec succès")
+    @PostMapping
+    public ResponseEntity<LivreurResponse> create(
+            @Parameter(description = "Données du livreur à créer", required = true)
+            @RequestBody LivreurRequest request) {
+        return new ResponseEntity<>(livreurService.create(request), HttpStatus.CREATED);
+    }
+
     @Operation(summary = "Récupérer la liste de tous les livreurs")
     @ApiResponse(responseCode = "200", description = "Liste des livreurs récupérée avec succès")
     @GetMapping
@@ -42,14 +51,7 @@ public class LivreurController {
         return livreurService.findById(id);
     }
 
-    @Operation(summary = "Créer un nouveau livreur")
-    @ApiResponse(responseCode = "201", description = "Livreur créé avec succès")
-    @PostMapping
-    public ResponseEntity<LivreurResponse> create(
-            @Parameter(description = "Données du livreur à créer", required = true)
-            @RequestBody LivreurRequest request) {
-        return new ResponseEntity<>(livreurService.create(request), HttpStatus.CREATED);
-    }
+
 
     @Operation(summary = "Mettre à jour un livreur existant")
     @ApiResponses({

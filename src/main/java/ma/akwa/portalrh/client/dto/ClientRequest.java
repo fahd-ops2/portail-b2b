@@ -1,5 +1,7 @@
 package ma.akwa.portalrh.client.dto;
 
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 
 import lombok.AllArgsConstructor;
@@ -13,10 +15,17 @@ import lombok.Setter;
     @NoArgsConstructor
     @AllArgsConstructor
     public class ClientRequest {
+        @NotNull
+        private String nom;
 
-        private String nomClient;
+        @NotNull
+        @Size(min = 8)
         private String password;
+
+        @NotNull
         private String email;
+
+        @NotNull
         private String address;
     }
 

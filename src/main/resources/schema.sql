@@ -95,3 +95,29 @@ CREATE TABLE reclamation (
                           date DATE
 );
 
+-- Table: livraisons
+CREATE TABLE livraisons (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    order_id BIGINT NOT NULL,
+    livreur_id BIGINT NOT NULL,
+    scheduled_time TIMESTAMP NOT NULL,
+    status VARCHAR(50) NOT NULL DEFAULT 'SCHEDULED' CHECK (status IN ('SCHEDULED', 'IN_PROGRESS', 'DELIVERED', 'CANCELLED')),
+    delivery_address VARCHAR(255) NOT NULL,
+    notes TEXT,
+    delivered_at TIMESTAMP,
+    tracking_code VARCHAR(255) UNIQUE,
+    latitude DOUBLE,
+    longitude DOUBLE,
+    is_urgent BOOLEAN DEFAULT FALSE,
+    CONSTRAINT fk_livraisons_order FOREIGN KEY (order_id) REFERENCES orders(id),
+    CONSTRAINT fk_livraisons_livreur FOREIGN KEY (livreur_id) REFERENCES livreurs(id)
+);
+
+-- Ajustements pour livraisons
+ALTER TABLE livraisons ALTER COLUMN id RESTART WITH (SELECT MAX(id) + 1 FROM livraisons);
+ALTER TABLE livraisons ALTER COLUMN status SET NOT NULL;
+ALTER TABLE livraisons ALTER COLUMN delivery_address SET NOT NULL;
+ALTER TABLE livraisons ALTER COLUMN is_urgent SET DEFAULT FALSE;
+
+
+

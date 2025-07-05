@@ -1,35 +1,39 @@
-logging:
-  level:
-    org.hibernate.SQL: DEBUG
-    org.springframework.jdbc.datasource.init.ScriptUtils: DEBUG
-server:
-  error:
-    include-message: always
-  port: 8090
 
-jwt:
-  secret: i9vWD++Wh7XYgQROV1EO0B2KphmDo7r0nC2GR9ErPHM=
+  logging:
+    level:
+      org.hibernate.SQL: DEBUG
+      org.springframework.jdbc.datasource.init.ScriptUtils: DEBUG
+  server:
+    error:
+      include-message: always
+    port: 8090
 
-spring:
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
-  sql:
-    init:
-      mode: always
-      platform: h2
-  datasource:
-    url: jdbc:h2:mem:aqua-db
-    username: sa
-    password:
-  jpa:
-    defer-datasource-initialization: true
-    hibernate:
-      ddl-auto: none
-    properties:
+  jwt:
+    secret: i9vWD++Wh7XYgQROV1EO0B2KphmDo7r0nC2GR9ErPHM=
+
+  spring:
+    h2:
+      console:
+        enabled: true
+        path: /h2-console
+    sql:
+      init:
+        mode: always
+        platform: h2
+    datasource:
+      url: jdbc:h2:mem:aqua-db
+      username: sa
+      password:
+    jpa:
+      defer-datasource-initialization: true
       hibernate:
-        dialect: org.hibernate.dialect.H2Dialect
-        format_sql: true
-  liquibase:
-    enabled: false
+        ddl-auto: none
+      properties:
+        hibernate:
+          dialect: org.hibernate.dialect.H2Dialect
+          format_sql: true
+    liquibase:
+      enabled: false
+
+  trackingmore:
+    api-key: VOTRE_CLÉ_API_TRACKINGMORE

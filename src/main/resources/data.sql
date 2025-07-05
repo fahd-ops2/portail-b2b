@@ -37,3 +37,8 @@ INSERT INTO order_item ( order_id, produit_id, quantity, unit_price, subtotal, n
 INSERT INTO reclamation(id,description,type, status, date) VALUES
 (1,'Le produit reçu est endommagé à louverture','Produit défectueux','PENDING','2025-06-06'),
 (2, 'Livraison retardée de 5 jours par rapport à la date prévue', 'Délai de livraison','IN_PROGRESS','2025-06-02');
+
+-- Insérer des livraisons
+INSERT INTO livraisons (order_id, livreur_id, scheduled_time, status, delivery_address, notes, tracking_code, latitude, longitude, is_urgent) VALUES
+ (1, 1, '2025-07-06 10:00:00', 'SCHEDULED', '123 Rue Exemple, Paris', 'Livrer avant midi', 'TRK-ABC12345', 48.8566, 2.3522, TRUE),
+ (2, 3, '2025-07-06 12:00:00', 'IN_PROGRESS', '456 Avenue Test, Lyon', NULL, 'TRK-XYZ67890', 45.7640, 4.8357, FALSE);

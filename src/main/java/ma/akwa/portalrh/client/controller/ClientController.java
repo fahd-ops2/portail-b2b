@@ -64,18 +64,18 @@ public class ClientController {
             @ApiResponse(responseCode = "200", description = "Client récupéré"),
             @ApiResponse(responseCode = "404", description = "Client non trouvé")
     })
-   /* @GetMapping("/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<ClientResponse> getById(
             @Parameter(description = "ID du client à récupérer", required = true)
             @PathVariable Long id) {
         return ResponseEntity.ok(clientService.getById(id));
-    }*/
-    @GetMapping("/{id}")
+    }
+   /* @GetMapping("/{id}")
     public ClientResponse getOrderById(
             @Parameter(description = "ID de la commande à récupérer", required = true)
             @PathVariable("id") Long id){
         return clientService.getById(id);
-    }
+    }*/
 
 
 
