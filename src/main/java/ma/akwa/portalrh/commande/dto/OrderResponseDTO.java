@@ -17,5 +17,5 @@ public record OrderResponseDTO(
         LocalDateTime createdAt,
         List<OrderLineDTO> items
 ) {
-    public record OrderLineDTO(Long productId, Double quantity,Double unitPrice, Double subtotal, String note) {}
+    public record OrderLineDTO(Long productId, String label ,Double quantity,Double unitPrice, Double subtotal, String note) {}
 }

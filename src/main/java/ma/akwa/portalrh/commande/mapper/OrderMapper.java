@@ -46,6 +46,7 @@ public interface OrderMapper {
 
     @Mapping(source = "produit.id", target = "productId")
     @Mapping(source = "quantity", target = "quantity")
+    @Mapping(source = "produit.nom", target = "label")
     OrderResponseDTO.OrderLineDTO toOrderLineDTO(OrderItem orderItem);
 
     // Custom mapping for productId -> Produit entity (simplified: only sets id)
