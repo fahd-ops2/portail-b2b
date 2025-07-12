@@ -1,18 +1,16 @@
-package ma.akwa.portalrh.client.dto;
+package ma.akwa.portalrh.admin.dto;
 
 import lombok.*;
 import ma.akwa.portalrh.common.enums.Role;
 
 @Getter
 @Setter
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ClientResponse {
+@Builder
+public class AdminResponse {
     private Long id;
     private String nom;
     private String email;
-    private String address;
     private Role role;
 }
-

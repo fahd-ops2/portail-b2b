@@ -3,7 +3,10 @@ INSERT INTO app_user (id, nom, email, password, role, locked, enabled) VALUES
 (1, 'Alice Livreur', 'alice.livreur@example.com', 'passwordHash1', 'LIVREUR', FALSE, TRUE),
 (2, 'Bob Client', 'bob.client@example.com', 'passwordHash2', 'CLIENT', FALSE, TRUE),
 (3, 'Charlie Livreur', 'charlie.livreur@example.com', 'passwordHash3', 'LIVREUR', FALSE, TRUE),
-(4, 'Diana Client', 'diana.client@example.com', 'passwordHash4', 'CLIENT', FALSE, TRUE);
+(4, 'Diana Client', 'diana.client@example.com', 'passwordHash4', 'CLIENT', FALSE, TRUE),
+(5, 'Emma Admin', 'emma.admin@example.com', 'passwordHash5', 'ADMIN', FALSE, TRUE),
+(6, 'Frank Admin', 'frank.admin@example.com', 'passwordHash6', 'ADMIN', FALSE, TRUE);
+
 
 -- Insert livreurs (inherits from app_user)
 INSERT INTO livreurs (id, phone_number, is_active) VALUES
@@ -21,7 +24,10 @@ INSERT INTO produits (id, nom, prix_unitaire, stock,description,type,image) VALU
 (2, 'Gaz Cylinder 12kg', 100.0, 50, 'Bouteille de butane standard pour applications commerciales', 'PROPANE','https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=300&h=200&fit=crop'''),
 (3, 'Gaz Cylinder 20kg', 150.0, 20,'fref','BUTANE','https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=300&h=200&fit=crop''');
 
-
+-- Insert Admin
+INSERT INTO admin (id, telephone) VALUES
+(5, '+1234567890'),
+(6, '+0987654321');
 -- Insert orders
 INSERT INTO orders ( client_id, created_at, status, delivery_address, scheduled_for, delivered_at, note, total_amount) VALUES
  (2, CURRENT_TIMESTAMP, 'EN_ATTENTE', '123 Main Street, Casablanca', CURRENT_TIMESTAMP + INTERVAL '1' DAY, NULL, 'Urgent delivery', 150.0),

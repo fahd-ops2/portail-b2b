@@ -24,6 +24,11 @@ CREATE TABLE clients (
     address VARCHAR(255),
     CONSTRAINT fk_client_user FOREIGN KEY (id) REFERENCES app_user(id) ON DELETE CASCADE
 );
+CREATE TABLE admin (
+ id BIGINT PRIMARY KEY,
+ telephone VARCHAR(20),
+ CONSTRAINT fk_admin_user FOREIGN KEY (id) REFERENCES app_user(id) ON DELETE CASCADE
+);
 
 -- Table: produits
 CREATE TABLE produits (

@@ -8,8 +8,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import ma.akwa.portalrh.common.enums.Role;
 
-    @Getter
+@Getter
     @Setter
     @Builder
     @NoArgsConstructor
@@ -27,5 +28,8 @@ import lombok.Setter;
 
         @NotNull
         private String address;
+
+        @NotNull
+        private Role role;
     }
 
