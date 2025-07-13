@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 
 public record DeliveryRequest(
         @NotNull(message = "L'ID de la commande ne peut pas être nul")
-        Long orderId,
+        String orderId,
 
         @NotNull(message = "L'ID du livreur ne peut pas être nul")
         Long livreurId,

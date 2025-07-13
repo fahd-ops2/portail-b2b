@@ -63,8 +63,8 @@ public class OrderController {
     @GetMapping("/{id}")
     public OrderResponseDTO getOrderById(
             @Parameter(description = "ID de la commande à récupérer", required = true)
-            @PathVariable("id") Long orderId){
-        return orderService.getOrder(orderId);
+            @PathVariable("id") String orderId){
+        return orderService.getOrder(String.valueOf(orderId));
     }
 
     @Operation(summary = "Annuler une commande par son ID")
@@ -76,8 +76,8 @@ public class OrderController {
     @PutMapping("/{id}/cancel")
     public OrderResponseDTO cancelOrder(
             @Parameter(description = "ID de la commande à annuler", required = true)
-            @PathVariable("id") Long orderId){
-        return orderService.cancelOrder(orderId);
+            @PathVariable("id") String orderId){
+        return orderService.cancelOrder(String.valueOf(orderId));
     }
 
     @Operation(summary = "Mettre à jour le statut d'une commande")
@@ -89,10 +89,10 @@ public class OrderController {
     @PutMapping("/{id}/status")
     public OrderResponseDTO updateStatus(
             @Parameter(description = "ID de la commande", required = true)
-            @PathVariable("id") Long orderId,
+            @PathVariable("id") String orderId,
             @Parameter(description = "Nouveau statut de la commande", required = true)
             @RequestBody String status) {
         OrderStatus orderStatus = OrderStatus.valueOf( status);
-        return orderService.updateStatus(orderId, orderStatus);
+        return orderService.updateStatus(String.valueOf(orderId), orderStatus);
     }
 }

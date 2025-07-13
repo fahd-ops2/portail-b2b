@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public record OrderResponseDTO(
-        Long id,
+        String id,
         Long clientId,
         String deliveryAddress,
         LocalDateTime scheduledFor,
@@ -17,5 +17,5 @@ public record OrderResponseDTO(
         LocalDateTime createdAt,
         List<OrderLineDTO> items
 ) {
-    public record OrderLineDTO(Long productId, String label ,Double quantity,Double unitPrice, Double subtotal, String note) {}
+    public record OrderLineDTO(String productId, String label ,Double quantity,Double unitPrice, Double subtotal, String note) {}
 }

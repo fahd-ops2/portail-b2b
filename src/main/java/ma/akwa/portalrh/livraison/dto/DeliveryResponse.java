@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 
 public record DeliveryResponse(
         Long id,
-        Long orderId,
+        String orderId,
         Long livreurId,
         LocalDateTime scheduledTime,
         DeliveryStatus status,

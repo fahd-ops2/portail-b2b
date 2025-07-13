@@ -15,9 +15,9 @@ public interface OrderService {
 
     Page<OrderResponseDTO> listOrdersByCompany();
 
-    OrderResponseDTO getOrder(Long orderId);
+    OrderResponseDTO getOrder(String orderId);
 
-    OrderResponseDTO cancelOrder(Long orderId);
+    OrderResponseDTO cancelOrder(String orderId);
 
-    OrderResponseDTO updateStatus(Long orderId, OrderStatus newStatus);
+    OrderResponseDTO updateStatus(String orderId, OrderStatus newStatus);
 }

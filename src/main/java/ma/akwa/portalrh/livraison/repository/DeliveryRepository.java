@@ -22,5 +22,5 @@ public interface DeliveryRepository extends JpaRepository<Delivery, Long> {
         List<Delivery> findByScheduledTimeBetween(LocalDateTime start, LocalDateTime end);
 
         // Trouver les livraisons pour une commande spécifique
-        Delivery findByOrderId(Long orderId);
+        Delivery findByOrderId(String orderId);
 }

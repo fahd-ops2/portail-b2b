@@ -32,7 +32,7 @@ public class DeliveryServiceImpl implements DeliveryService {
 
     @Override
     public DeliveryResponse create(@Valid DeliveryRequest request) {
-        Order order = orderRepository.findById(request.orderId())
+        Order order = orderRepository.findById(String.valueOf(request.orderId()))
                 .orElseThrow(() -> new EntityNotFoundException("Commande avec l'ID " + request.orderId() + " non trouvée"));
         Livreur livreur = livreurRepository.findById(request.livreurId())
                 .orElseThrow(() -> new EntityNotFoundException("Livreur avec l'ID " + request.livreurId() + " non trouvé"));
@@ -50,7 +50,7 @@ public class DeliveryServiceImpl implements DeliveryService {
         Delivery delivery = deliveryRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Livraison avec l'ID " + id + " non trouvée"));
 
-        Order order = orderRepository.findById(request.orderId())
+        Order order = orderRepository.findById(String.valueOf(request.orderId()))
                 .orElseThrow(() -> new EntityNotFoundException("Commande avec l'ID " + request.orderId() + " non trouvée"));
         Livreur livreur = livreurRepository.findById(request.livreurId())
                 .orElseThrow(() -> new EntityNotFoundException("Livreur avec l'ID " + request.livreurId() + " non trouvé"));

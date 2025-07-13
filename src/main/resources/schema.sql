@@ -41,17 +41,17 @@ CREATE TABLE produits (
   image VARCHAR(255)
 );
 
-
+/*
 -- Remplacer l'instruction problématique
 ALTER TABLE produits ALTER COLUMN nom VARCHAR(255) NOT NULL;
 ALTER TABLE produits ALTER COLUMN prix_unitaire DOUBLE NOT NULL;
 ALTER TABLE produits ALTER COLUMN stock INT NOT NULL;
-ALTER TABLE produits ALTER COLUMN stock SET DEFAULT 0;
+ALTER TABLE produits ALTER COLUMN stock SET DEFAULT 0;*/
 
 
 -- Table: orders
 CREATE TABLE orders (
-    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    id VARCHAR(255) PRIMARY KEY,
     client_id BIGINT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     status VARCHAR(50) NOT NULL DEFAULT 'EN_ATTENTE' CHECK (status IN ('EN_ATTENTE', 'EN_COURS', 'LIVREE', 'ANNULEE')) ,
@@ -63,18 +63,18 @@ CREATE TABLE orders (
 
     CONSTRAINT fk_orders_client FOREIGN KEY (client_id) REFERENCES clients(id)
 );
-
+/*
 -- Remplacer l'instruction Order
 ALTER TABLE orders ALTER COLUMN id RESTART WITH (SELECT MAX(id) + 1 FROM orders);
 ALTER TABLE orders ALTER COLUMN status VARCHAR(50) NOT NULL;
 ALTER TABLE orders ALTER COLUMN total_amount SET DATA TYPE DOUBLE;
 ALTER TABLE orders ALTER COLUMN total_amount SET NOT NULL;
-ALTER TABLE orders ALTER COLUMN total_amount SET DEFAULT 0.0;
+ALTER TABLE orders ALTER COLUMN total_amount SET DEFAULT 0.0;*/
 
 
 CREATE TABLE order_item (
-    id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    order_id BIGINT NOT NULL,
+    id VARCHAR(255) PRIMARY KEY,
+    order_id VARCHAR(255) NOT NULL,
     produit_id VARCHAR(36) NOT NULL,
     quantity DOUBLE,
     unit_price DOUBLE,
@@ -84,26 +84,34 @@ CREATE TABLE order_item (
     CONSTRAINT fk_order_item_order FOREIGN KEY (order_id) REFERENCES orders(id),
     CONSTRAINT fk_order_item_produit FOREIGN KEY (produit_id) REFERENCES produits(id) ON DELETE CASCADE
 );
-
+/*
 -- Remplacer l'instruction problématique ORDER_ITEM
 ALTER TABLE order_item ALTER COLUMN id RESTART WITH (SELECT MAX(id) + 1 FROM order_item);
 ALTER TABLE order_item ALTER COLUMN quantity DOUBLE NOT NULL;
 ALTER TABLE order_item ALTER COLUMN unit_price DOUBLE NOT NULL;
-ALTER TABLE order_item ALTER COLUMN subtotal DOUBLE NOT NULL;
+ALTER TABLE order_item ALTER COLUMN subtotal DOUBLE NOT NULL;*/
 
--- Table: reclamation
-CREATE TABLE reclamation (
-                          id BIGINT AUTO_INCREMENT PRIMARY KEY,
-                          description VARCHAR(255),
-                          type VARCHAR(255),
-                          status VARCHAR(255),
-                          date DATE
+-- Table: reclamations
+CREATE TABLE reclamations (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    client_id BIGINT NOT NULL,
+    order_id VARCHAR(255) NOT NULL,
+    description TEXT NOT NULL,
+    type VARCHAR(255) NOT NULL,
+    status VARCHAR(50) NOT NULL,
+    created_at TIMESTAMP NOT NULL,
+    updated_at TIMESTAMP,
+    resolution_notes TEXT,
+    file_path VARCHAR(255),
+    FOREIGN KEY (client_id) REFERENCES clients(id),
+    FOREIGN KEY (order_id) REFERENCES orders(id)
+
 );
 
 -- Table: livraisons
 CREATE TABLE livraisons (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    order_id BIGINT NOT NULL,
+    order_id VARCHAR(255) NOT NULL,
     livreur_id BIGINT NOT NULL,
     scheduled_time TIMESTAMP NOT NULL,
     status VARCHAR(50) NOT NULL DEFAULT 'SCHEDULED' CHECK (status IN ('SCHEDULED', 'IN_PROGRESS', 'DELIVERED', 'CANCELLED')),
@@ -117,12 +125,12 @@ CREATE TABLE livraisons (
     CONSTRAINT fk_livraisons_order FOREIGN KEY (order_id) REFERENCES orders(id),
     CONSTRAINT fk_livraisons_livreur FOREIGN KEY (livreur_id) REFERENCES livreurs(id)
 );
-
+/*
 -- Ajustements pour livraisons
 ALTER TABLE livraisons ALTER COLUMN id RESTART WITH (SELECT MAX(id) + 1 FROM livraisons);
 ALTER TABLE livraisons ALTER COLUMN status SET NOT NULL;
 ALTER TABLE livraisons ALTER COLUMN delivery_address SET NOT NULL;
-ALTER TABLE livraisons ALTER COLUMN is_urgent SET DEFAULT FALSE;
+ALTER TABLE livraisons ALTER COLUMN is_urgent SET DEFAULT FALSE;*/
 
 
 

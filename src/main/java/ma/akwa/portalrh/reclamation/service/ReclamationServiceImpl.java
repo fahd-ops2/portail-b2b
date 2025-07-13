@@ -9,38 +9,62 @@ import ma.akwa.portalrh.reclamation.repository.ReclamationRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.UUID;
 
 @Service
 @AllArgsConstructor
 public class ReclamationServiceImpl implements ReclamationService {
     private final ReclamationRepository reclamationRepository;
     private final ReclamationMapper reclamationMapper;
+
     @Override
     public ReclamationResponse create(ReclamationRequest request) {
-        Reclamation reclamation  = reclamationMapper.toEntity(request);
+        Reclamation reclamation = reclamationMapper.toEntity(request);
+
+        if (request.getFile() != null && !request.getFile().isEmpty()) {
+            String filePath = saveFile(request.getFile());
+            reclamation.setFilePath(filePath);
+        }
+
         Reclamation createdReclamation = reclamationRepository.save(reclamation);
         return reclamationMapper.toResponse(createdReclamation);
     }
 
     @Override
     public ReclamationResponse update(Long id, ReclamationRequest request) {
-        return null;
+        Reclamation reclamation = reclamationRepository
+                .findById(id)
+                .orElseThrow(() -> new RuntimeException("Réclamation " + id + " non trouvée"));
+
+        if (request.getFile() != null && !request.getFile().isEmpty()) {
+            String filePath = saveFile(request.getFile());
+            reclamation.setFilePath(filePath);
+        }
+
+        reclamationMapper.updateEntityFromRequest(request, reclamation);
+        Reclamation updatedReclamation = reclamationRepository.save(reclamation);
+        return reclamationMapper.toResponse(updatedReclamation);
     }
 
     @Override
     public void delete(Long id) {
         Reclamation reclamation = reclamationRepository
                 .findById(id)
-                .orElseThrow(()-> new RuntimeException("reclamation "+ id +" not found"));
+                .orElseThrow(() -> new RuntimeException("Réclamation " + id + " non trouvée"));
         reclamationRepository.delete(reclamation);
-
     }
 
     @Override
     public ReclamationResponse getById(Long id) {
         Reclamation reclamation = reclamationRepository
                 .findById(id)
-                .orElseThrow(()-> new RuntimeException("reclamation "+ id +" not found"));;
+                .orElseThrow(() -> new RuntimeException("Réclamation " + id + " non trouvée"));
         return reclamationMapper.toResponse(reclamation);
     }
 
@@ -48,5 +72,18 @@ public class ReclamationServiceImpl implements ReclamationService {
     public Page<ReclamationResponse> getAllPaginated(Pageable pageable) {
         Page<Reclamation> reclamations = reclamationRepository.findAll(pageable);
         return reclamations.map(reclamationMapper::toResponse);
+    }
+
+    private String saveFile(MultipartFile file) {
+        try {
+            String uploadDir = "uploads/reclamations/";
+            String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
+            Path filePath = Paths.get(uploadDir, fileName);
+            Files.createDirectories(filePath.getParent());
+            Files.write(filePath, file.getBytes());
+            return filePath.toString();
+        } catch (IOException e) {
+            throw new RuntimeException("Échec de l'enregistrement du fichier", e);
+        }
     }
 }
