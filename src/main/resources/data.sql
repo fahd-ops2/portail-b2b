@@ -1,11 +1,11 @@
 -- Insert users (base users for livreurs and clients)
 INSERT INTO app_user (id, nom, email, password, role, locked, enabled) VALUES
-                                                                           (1, 'Alice Livreur', 'alice.livreur@example.com', '$2a$10$zW5gYc3z3z3z3z3z3z3z3u', 'LIVREUR', FALSE, TRUE),
-                                                                           (2, 'Bob Client', 'bob.client@example.com', '$2a$10$zW5gYc3z3z3z3z3z3z3z3u', 'CLIENT', FALSE, TRUE),
-                                                                           (3, 'Charlie Livreur', 'charlie.livreur@example.com', '$2a$10$zW5gYc3z3z3z3z3z3z3z3u', 'LIVREUR', FALSE, TRUE),
-                                                                           (4, 'Diana Client', 'diana.client@example.com', '$2a$10$zW5gYc3z3z3z3z3z3z3z3u', 'CLIENT', FALSE, TRUE),
-                                                                           (5, 'Emma Admin', 'emma.admin@example.com', '$2a$10$zW5gYc3z3z3z3z3z3z3z3u', 'ADMIN', FALSE, TRUE),
-                                                                           (6, 'Frank Admin', 'frank.admin@example.com', '$2a$10$zW5gYc3z3z3z3z3z3z3z3u', 'ADMIN', FALSE, TRUE);
+         (1, 'Alice Livreur', 'alice.livreur@example.com', '$2a$10$zW5gYc3z3z3z3z3z3z3z3u', 'LIVREUR', FALSE, TRUE),
+         (2, 'Bob Client', 'bob.client@example.com', '$2a$10$zW5gYc3z3z3z3z3z3z3z3u', 'CLIENT', FALSE, TRUE),
+         (3, 'Charlie Livreur', 'charlie.livreur@example.com', '$2a$10$zW5gYc3z3z3z3z3z3z3z3u', 'LIVREUR', FALSE, TRUE),
+         (4, 'Diana Client', 'diana.client@example.com', '$2a$10$zW5gYc3z3z3z3z3z3z3z3u', 'CLIENT', FALSE, TRUE),
+         (5, 'Emma Admin', 'emma.admin@example.com', '$2a$10$zW5gYc3z3z3z3z3z3z3z3u', 'ADMIN', FALSE, TRUE),
+         (6, 'Frank Admin', 'frank.admin@example.com', '$2a$10$zW5gYc3z3z3z3z3z3z3z3u', 'ADMIN', FALSE, TRUE);
 
 -- Insert livreurs (inherits from app_user)
 INSERT INTO livreurs (id, phone_number, is_active) VALUES

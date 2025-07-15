@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import ma.akwa.portalrh.common.enums.DeliveryStatus;
 import ma.akwa.portalrh.livraison.dto.DeliveryRequest;
 import ma.akwa.portalrh.livraison.dto.DeliveryResponse;
 
@@ -97,8 +98,8 @@ public class DeliveryController {
             @Parameter(description = "ID de la livraison à mettre à jour", required = true)
             @PathVariable Long id,
             @Parameter(description = "Numéro de suivi de la livraison", required = true)
-            @RequestParam String trackingCode) {
-        deliveryService.updateDeliveryStatus(id, trackingCode);
+            @RequestParam DeliveryStatus status) {
+        deliveryService.updateDeliveryStatus(id, status);
         return ResponseEntity.noContent().build();
     }
 }

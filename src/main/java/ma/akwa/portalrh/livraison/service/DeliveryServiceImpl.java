@@ -11,7 +11,6 @@ import ma.akwa.portalrh.livraison.entities.Delivery;
 import ma.akwa.portalrh.livraison.mapper.DeliveryMapper;
 import ma.akwa.portalrh.commande.entities.Order;
 import ma.akwa.portalrh.livraison.repository.DeliveryRepository;
-import ma.akwa.portalrh.livraison.service.DeliveryService;
 import ma.akwa.portalrh.livreur.entities.Livreur;
 import ma.akwa.portalrh.livreur.repository.LivreurRepository;
 import org.springframework.data.domain.Page;
@@ -93,7 +92,7 @@ public class DeliveryServiceImpl implements DeliveryService {
     }
 
     @Override
-    public void updateDeliveryStatus(Long id, String trackingCode) {
+    public void updateDeliveryStatus(Long id, DeliveryStatus status) {
         Delivery delivery = deliveryRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Livraison avec l'ID " + id + " non trouvée"));
         // Mise à jour manuelle du statut sans appel à l'API TrackingMore
@@ -104,7 +103,7 @@ public class DeliveryServiceImpl implements DeliveryService {
         deliveryRepository.save(delivery);
     }
 
-    private String generateTrackingNumber() {
+   /* private String generateTrackingNumber() {
         return "TRK-" + UUID.randomUUID().toString().substring(0, 8).toUpperCase();
-    }
+    }*/
 }
