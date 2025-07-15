@@ -24,11 +24,11 @@ public class ReclamationServiceImpl implements ReclamationService {
     private final ReclamationMapper reclamationMapper;
 
     @Override
-    public ReclamationResponse create(ReclamationRequest request) {
+    public ReclamationResponse create(ReclamationRequest request, MultipartFile file) {
         Reclamation reclamation = reclamationMapper.toEntity(request);
 
-        if (request.getFile() != null && !request.getFile().isEmpty()) {
-            String filePath = saveFile(request.getFile());
+        if (file != null && !file.isEmpty()) {
+            String filePath = saveFile(file);
             reclamation.setFilePath(filePath);
         }
 
@@ -37,17 +37,18 @@ public class ReclamationServiceImpl implements ReclamationService {
     }
 
     @Override
-    public ReclamationResponse update(Long id, ReclamationRequest request) {
+    public ReclamationResponse update(Long id, ReclamationRequest request, MultipartFile file) {
         Reclamation reclamation = reclamationRepository
                 .findById(id)
                 .orElseThrow(() -> new RuntimeException("Réclamation " + id + " non trouvée"));
 
-        if (request.getFile() != null && !request.getFile().isEmpty()) {
-            String filePath = saveFile(request.getFile());
+        reclamationMapper.updateEntityFromRequest(request, reclamation);
+
+        if (file != null && !file.isEmpty()) {
+            String filePath = saveFile(file);
             reclamation.setFilePath(filePath);
         }
 
-        reclamationMapper.updateEntityFromRequest(request, reclamation);
         Reclamation updatedReclamation = reclamationRepository.save(reclamation);
         return reclamationMapper.toResponse(updatedReclamation);
     }

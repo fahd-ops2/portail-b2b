@@ -61,7 +61,7 @@ CREATE TABLE orders (
     note TEXT,
     total_amount DOUBLE,
 
-    CONSTRAINT fk_orders_client FOREIGN KEY (client_id) REFERENCES clients(id)
+    CONSTRAINT fk_orders_client FOREIGN KEY (client_id) REFERENCES clients(id) ON DELETE CASCADE
 );
 /*
 -- Remplacer l'instruction Order
@@ -81,7 +81,7 @@ CREATE TABLE order_item (
     subtotal DOUBLE,
     note TEXT,
 
-    CONSTRAINT fk_order_item_order FOREIGN KEY (order_id) REFERENCES orders(id),
+    CONSTRAINT fk_order_item_order FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE,
     CONSTRAINT fk_order_item_produit FOREIGN KEY (produit_id) REFERENCES produits(id) ON DELETE CASCADE
 );
 /*
@@ -103,8 +103,8 @@ CREATE TABLE reclamations (
     updated_at TIMESTAMP,
     resolution_notes TEXT,
     file_path VARCHAR(255),
-    FOREIGN KEY (client_id) REFERENCES clients(id),
-    FOREIGN KEY (order_id) REFERENCES orders(id)
+    FOREIGN KEY (client_id) REFERENCES clients(id) ON DELETE CASCADE,
+    FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE
 
 );
 
@@ -122,7 +122,7 @@ CREATE TABLE livraisons (
     latitude DOUBLE,
     longitude DOUBLE,
     is_urgent BOOLEAN DEFAULT FALSE,
-    CONSTRAINT fk_livraisons_order FOREIGN KEY (order_id) REFERENCES orders(id),
+    CONSTRAINT fk_livraisons_order FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE,
     CONSTRAINT fk_livraisons_livreur FOREIGN KEY (livreur_id) REFERENCES livreurs(id)
 );
 /*

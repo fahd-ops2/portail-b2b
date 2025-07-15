@@ -41,10 +41,10 @@ INSERT INTO order_item (id, order_id, produit_id, quantity, unit_price, subtotal
 
 -- Insert reclamations
 INSERT INTO reclamations (id, client_id, order_id, description, type, status, created_at, updated_at, resolution_notes, file_path) VALUES
-                                            (1, 2, 'CMD-12345678', 'Problème avec la livraison, article endommagé', 'GENERAL', 'EN_ATTENTE', CURRENT_TIMESTAMP, NULL, NULL, NULL),
-                                             (2, 4, 'CMD-87654321', 'Commande incomplète', 'PRODUIT', 'RESOLUE', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'Remplacement envoyé', '/uploads/reclamation2.pdf');
+             (1, 2, 'CMD-12345678', 'Problème avec la livraison, article endommagé', 'GENERAL', 'EN_ATTENTE', CURRENT_TIMESTAMP, NULL, NULL, NULL),
+             (2, 4, 'CMD-87654321', 'Commande incomplète', 'PRODUIT', 'RESOLUE', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'Remplacement envoyé', '/uploads/reclamation2.pdf');
 
 -- Insérer des livraisons
-INSERT INTO livraisons (order_id, livreur_id, scheduled_time, status, delivery_address, notes, tracking_code, latitude, longitude, is_urgent) VALUES
-                        ('CMD-12345678', 1, '2025-07-06 10:00:00', 'SCHEDULED', '123 Rue Exemple, Paris', 'Livrer avant midi', 'TRK-ABC12345', 48.8566, 2.3522, TRUE),
-                        ('CMD-87654321', 3, '2025-07-06 12:00:00', 'IN_PROGRESS', '456 Avenue Test, Lyon', NULL, 'TRK-XYZ67890', 45.7640, 4.8357, FALSE);
+INSERT INTO livraisons (ID,order_id, livreur_id, scheduled_time, status, delivery_address, notes, tracking_code, latitude, longitude, is_urgent) VALUES
+                        (1,'CMD-12345678', 1, '2025-07-06 10:00:00', 'SCHEDULED', '123 Rue Exemple, Paris', 'Livrer avant midi', 'TRK-ABC12345', 48.8566, 2.3522, TRUE),
+                        (2,'CMD-87654321', 3, '2025-07-06 12:00:00', 'IN_PROGRESS', '456 Avenue Test, Lyon', NULL, 'TRK-XYZ67890', 45.7640, 4.8357, FALSE);

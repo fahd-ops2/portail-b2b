@@ -4,7 +4,6 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import ma.akwa.portalrh.common.enums.ReclamationStatus;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 
@@ -33,6 +32,4 @@ public class ReclamationRequest {
 
     @NotNull(message = "La date de création ne peut pas être nulle")
     private LocalDate date;
-
-    private MultipartFile file; // Champ pour le fichier uploadé
 }
