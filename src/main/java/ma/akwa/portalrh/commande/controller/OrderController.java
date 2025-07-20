@@ -13,6 +13,7 @@ import ma.akwa.portalrh.commande.service.OrderService;
 import ma.akwa.portalrh.common.enums.OrderStatus;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,6 +29,7 @@ public class OrderController {
     @Operation(summary = "Créer une nouvelle commande")
     @ApiResponse(responseCode = "200", description = "Commande créée avec succès")
     @PostMapping
+    @PreAuthorize("hasRole('CLIENT')")
     public OrderResponseDTO createOrder(
             @Parameter(description = "Détails de la commande à créer", required = true)
             @RequestBody OrderRequestDTO orderRequestDTO){
@@ -40,6 +42,7 @@ public class OrderController {
             @ApiResponse(responseCode = "400", description = "Données de la requête invalides")
     })
     @PostMapping("/bulk")
+    @PreAuthorize("hasRole('CLIENT')")
     public ResponseEntity<List<OrderResponseDTO>> createOrders(
             @Parameter(description = "Liste des commandes à créer", required = true)
             @RequestBody BulkOrderRequestDTO bulkOrderRequestDTO) {
@@ -50,6 +53,7 @@ public class OrderController {
     @Operation(summary = "Lister les commandes de l'entreprise")
     @ApiResponse(responseCode = "200", description = "Liste des commandes récupérée avec succès")
     @GetMapping
+    @PreAuthorize("hasRole('CLIENT') or hasRole('ADMIN')")
     public Page<OrderResponseDTO> getOrdersByCompany() {
         return orderService.listOrdersByCompany();
     }
@@ -61,6 +65,7 @@ public class OrderController {
             @ApiResponse(responseCode = "404", description = "Commande non trouvée")
     })
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('CLIENT') or hasRole('ADMIN')")
     public OrderResponseDTO getOrderById(
             @Parameter(description = "ID de la commande à récupérer", required = true)
             @PathVariable("id") Long orderId){
@@ -74,6 +79,7 @@ public class OrderController {
             @ApiResponse(responseCode = "400", description = "Impossible d'annuler la commande")
     })
     @PutMapping("/{id}/cancel")
+    @PreAuthorize("hasRole('CLIENT') or hasRole('ADMIN')")
     public OrderResponseDTO cancelOrder(
             @Parameter(description = "ID de la commande à annuler", required = true)
             @PathVariable("id") Long orderId){
@@ -87,6 +93,7 @@ public class OrderController {
             @ApiResponse(responseCode = "400", description = "Transition de statut invalide")
     })
     @PutMapping("/{id}/status")
+    @PreAuthorize("hasRole('CLIENT') or hasRole('ADMIN') or hasRole('LIVREUR')")
     public OrderResponseDTO updateStatus(
             @Parameter(description = "ID de la commande", required = true)
             @PathVariable("id") Long orderId,

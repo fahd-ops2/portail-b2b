@@ -13,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -26,6 +27,7 @@ public class ReclamationController {
     @Operation(summary = "Créer un nouvelle reclamation")
     @ApiResponse(responseCode = "200", description = "Reclamation créé avec succès")
     @PostMapping
+    @PreAuthorize("hasRole('CLIENT')")
     public ResponseEntity<ReclamationResponse> create(
             @Parameter(description = "Données du reclamation à créer", required = true)
             @RequestBody ReclamationRequest request) {
@@ -38,6 +40,7 @@ public class ReclamationController {
             @ApiResponse(responseCode = "404", description = "Produit non trouvé")
     })
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('CLIENT')")
     public ResponseEntity<ReclamationResponse> update(
             @Parameter(description = "ID du reclamation à mettre à jour", required = true)
             @PathVariable Long id,
@@ -47,6 +50,7 @@ public class ReclamationController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('CLIENT')")
     public ResponseEntity<Void> delete(
             @Parameter(description = "ID du reclamation à supprimer", required = true)
             @PathVariable Long id) {
@@ -61,6 +65,7 @@ public class ReclamationController {
             @ApiResponse(responseCode = "404", description = "Reclamation non trouvé")
     })
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('CLIENT') or hasRole('ADMIN')")
     public ResponseEntity<ReclamationResponse> getById(
             @Parameter(description = "ID du reclamation à récupérer", required = true)
             @PathVariable Long id) {
@@ -70,6 +75,7 @@ public class ReclamationController {
     @Operation(summary = "Récupérer une page des reclamations")
     @ApiResponse(responseCode = "200", description = "Liste paginée des reclamations récupérée avec succès")
     @GetMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Page<ReclamationResponse>> getAllPaginated(
             @Parameter(description = "Taille de la page", example = "10", required = true)
             @RequestParam int size,

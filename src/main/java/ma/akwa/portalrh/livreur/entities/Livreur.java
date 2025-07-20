@@ -12,6 +12,7 @@ import ma.akwa.portalrh.auth.entities.User;
 @Entity
 @Setter @Getter @NoArgsConstructor @AllArgsConstructor
 @Table(name = "livreurs")
+@DiscriminatorValue("ROLE_LIVREUR")
 public class Livreur extends User {
 
     @Column(name = "phone_number")

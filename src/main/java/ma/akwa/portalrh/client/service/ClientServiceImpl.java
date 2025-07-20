@@ -31,7 +31,7 @@ public class ClientServiceImpl implements ClientService {
     public ClientResponse create(ClientRequest request) {
         Client client = clientMapper.toEntity(request);
         client.setPassword(passwordEncoder.encode(request.getPassword()));
-        client.setRole(Role.CLIENT); // Définir le rôle par défaut pour les clients
+        client.setRole(Role.ROLE_CLIENT); // Définir le rôle par défaut pour les clients
         client.setLocked(false); // Compte non verrouillé par défaut
         client.setEnabled(true); // Compte activé par défaut
         Client createdClient = clientRepository.save(client);

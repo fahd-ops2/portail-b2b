@@ -13,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -20,10 +21,13 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @Tag(name = "Client API", description = "API pour la gestion des clients")
 public class ClientController {
+
     private final ClientService clientService;
+
     @Operation(summary = "Créer un nouveau client")
     @ApiResponse(responseCode = "200", description = "Client créé avec succès")
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ClientResponse> create(
             @Parameter(description = "Données du client à créer", required = true)
             @RequestBody ClientRequest request) {
@@ -36,6 +40,7 @@ public class ClientController {
             @ApiResponse(responseCode = "404", description = "Client non trouvé")
     })
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ClientResponse> update(
             @Parameter(description = "ID du client à mettre à jour", required = true)
             @PathVariable Long id,
@@ -50,6 +55,7 @@ public class ClientController {
             @ApiResponse(responseCode = "404", description = "Client non trouvé")
     })
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> delete(
             @Parameter(description = "ID du client à supprimer", required = true)
             @PathVariable Long id) {

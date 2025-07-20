@@ -11,6 +11,7 @@ import ma.akwa.portalrh.livreur.dto.LivreurResponse;
 import ma.akwa.portalrh.livreur.service.LivreurService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,6 +27,7 @@ public class LivreurController {
     @Operation(summary = "Créer un nouveau livreur")
     @ApiResponse(responseCode = "201", description = "Livreur créé avec succès")
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<LivreurResponse> create(
             @Parameter(description = "Données du livreur à créer", required = true)
             @RequestBody LivreurRequest request) {
@@ -35,6 +37,7 @@ public class LivreurController {
     @Operation(summary = "Récupérer la liste de tous les livreurs")
     @ApiResponse(responseCode = "200", description = "Liste des livreurs récupérée avec succès")
     @GetMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public List<LivreurResponse> getAll() {
         return livreurService.findAll();
     }
@@ -45,6 +48,7 @@ public class LivreurController {
             @ApiResponse(responseCode = "404", description = "Livreur non trouvé")
     })
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('LIVREUR')")
     public LivreurResponse getById(
             @Parameter(description = "ID du livreur à récupérer", required = true)
             @PathVariable Long id) {
@@ -59,6 +63,7 @@ public class LivreurController {
             @ApiResponse(responseCode = "404", description = "Livreur non trouvé")
     })
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public LivreurResponse update(
             @Parameter(description = "ID du livreur à mettre à jour", required = true)
             @PathVariable Long id,
@@ -73,6 +78,7 @@ public class LivreurController {
             @ApiResponse(responseCode = "404", description = "Livreur non trouvé")
     })
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> delete(
             @Parameter(description = "ID du livreur à supprimer", required = true)
             @PathVariable Long id) {
@@ -86,6 +92,7 @@ public class LivreurController {
             @ApiResponse(responseCode = "404", description = "Livreur non trouvé")
     })
     @PatchMapping("/{id}/toggle")
+    @PreAuthorize("hasRole('ADMIN')")
     public LivreurResponse toggleAvailability(
             @Parameter(description = "ID du livreur dont on veut basculer la disponibilité", required = true)
             @PathVariable Long id) {

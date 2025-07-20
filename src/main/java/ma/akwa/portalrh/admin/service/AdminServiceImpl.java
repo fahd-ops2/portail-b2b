@@ -4,7 +4,7 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import ma.akwa.portalrh.admin.dto.AdminRequest;
 import ma.akwa.portalrh.admin.dto.AdminResponse;
-import ma.akwa.portalrh.admin.entities.Admin;
+import ma.akwa.portalrh.auth.entities.Admin;
 import ma.akwa.portalrh.admin.mapper.AdminMapper;
 import ma.akwa.portalrh.admin.repository.AdminRepository;
 import ma.akwa.portalrh.common.enums.Role;
@@ -25,7 +25,7 @@ public class AdminServiceImpl implements AdminService {
     public AdminResponse create(AdminRequest request) {
         Admin admin = adminMapper.toEntity(request);
         admin.setPassword(passwordEncoder.encode(request.getPassword()));
-        admin.setRole(Role.ADMIN); // Définir le rôle par défaut pour les admins
+        admin.setRole(Role.ROLE_ADMIN); // Définir le rôle par défaut pour les admins
         admin.setLocked(false); // Compte non verrouillé par défaut
         admin.setEnabled(true); // Compte activé par défaut
         Admin createdAdmin = adminRepository.save(admin);

@@ -13,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -26,6 +27,7 @@ public class ProduitController {
     @Operation(summary = "Créer un nouveau produit")
     @ApiResponse(responseCode = "200", description = "Produit créé avec succès")
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ProduitResponse> create(
             @Parameter(description = "Données du produit à créer", required = true)
             @RequestBody ProduitRequest request) {
@@ -38,6 +40,7 @@ public class ProduitController {
             @ApiResponse(responseCode = "404", description = "Produit non trouvé")
     })
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ProduitResponse> update(
             @Parameter(description = "ID du produit à mettre à jour", required = true)
             @PathVariable String id,
@@ -52,6 +55,7 @@ public class ProduitController {
             @ApiResponse(responseCode = "404", description = "Produit non trouvé")
     })
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> delete(
             @Parameter(description = "ID du produit à supprimer", required = true)
             @PathVariable String id) {
@@ -65,6 +69,7 @@ public class ProduitController {
             @ApiResponse(responseCode = "404", description = "Produit non trouvé")
     })
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('CLIENT') or hasRole('ADMIN')")
     public ResponseEntity<ProduitResponse> getById(
             @Parameter(description = "ID du produit à récupérer", required = true)
             @PathVariable String id) {
@@ -74,6 +79,7 @@ public class ProduitController {
     @Operation(summary = "Récupérer une page de produits")
     @ApiResponse(responseCode = "200", description = "Liste paginée des produits récupérée avec succès")
     @GetMapping
+    @PreAuthorize("hasRole('CLIENT') or hasRole('ADMIN')")
     public ResponseEntity<Page<ProduitResponse>> getAllPaginated(
             @Parameter(description = "Taille de la page", example = "10", required = true)
             @RequestParam int size,

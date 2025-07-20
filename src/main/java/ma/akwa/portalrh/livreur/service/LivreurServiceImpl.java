@@ -40,7 +40,7 @@ public class LivreurServiceImpl implements LivreurService {
     public LivreurResponse create(LivreurRequest request) {
         Livreur livreur = livreurMapper.toEntity(request);
         livreur.setPassword(passwordEncoder.encode(request.password()));
-        livreur.setRole(Role.LIVREUR); // Définir le rôle par défaut pour les clients
+        livreur.setRole(Role.ROLE_LIVREUR); // Définir le rôle par défaut pour les clients
         livreur.setLocked(false); // Compte non verrouillé par défaut
         livreur.setEnabled(true); // Compte activé par défaut
         Livreur createdClient = livreurRepository.save(livreur);

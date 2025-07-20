@@ -1,7 +1,7 @@
 package ma.akwa.portalrh.common.enums;
 
 public enum Role {
-    CLIENT,
-    LIVREUR,
-    ADMIN
+    ROLE_CLIENT,
+    ROLE_LIVREUR,
+    ROLE_ADMIN
 }

@@ -15,6 +15,7 @@ import java.util.Collections;
 @EqualsAndHashCode
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "app_user")
+@DiscriminatorColumn(name = "role", discriminatorType = DiscriminatorType.STRING)
 public class User implements UserDetails {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,9 +24,11 @@ public class User implements UserDetails {
     private String email;
     private String password;
     @Enumerated(EnumType.STRING)
+    @Column(insertable = false, updatable = false)
     private Role role;
     private Boolean locked;
     private Boolean enabled;
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -35,12 +38,12 @@ public class User implements UserDetails {
 
     @Override
     public String getPassword() {
-        return "";
+        return this.password;
     }
 
     @Override
     public String getUsername() {
-        return "";
+        return this.email;
     }
     @Override
     public boolean isAccountNonExpired() {

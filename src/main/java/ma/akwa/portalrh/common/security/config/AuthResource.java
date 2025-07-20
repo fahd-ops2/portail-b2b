@@ -1,10 +1,16 @@
 package ma.akwa.portalrh.common.security.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,27 +18,30 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/v1/auth")
+@RequiredArgsConstructor
+@Slf4j
 public class AuthResource {
 
     private  final AuthenticationManager authenticationManager;
     private final UserDao userDao;
     private final JwtUtils jwtUtils;
-    @Autowired
-    public AuthResource(AuthenticationManager authenticationManager, UserDao userDao, JwtUtils jwtUtils) {
-        this.authenticationManager = authenticationManager;
-        this.userDao = userDao;
-        this.jwtUtils = jwtUtils;
-    }
+
 
     @PostMapping("/authenticate")
-    public ResponseEntity<String> authenticate(@RequestBody AuthenticationtRequest request) {
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(request.getEmail(),request.getPassword())
-        );
-        final UserDetails userDetails = userDao.findByEmail(request.getEmail());
-        if (userDetails != null){
-            return ResponseEntity.ok(jwtUtils.generateToken(userDetails));
+    public ResponseEntity<String> authenticate(@Valid @RequestBody AuthenticationRequest request) {
+        try {
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
+            );
+        } catch (BadCredentialsException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Authentication error: " + e.getMessage());
         }
-        return ResponseEntity.status(400).body("some error has occured");
+
+        final UserDetails userDetails = userDao.findByEmail(request.getEmail());
+        return ResponseEntity.ok(jwtUtils.generateToken(userDetails));
     }
+
+
 }

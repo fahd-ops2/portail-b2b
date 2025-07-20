@@ -2,7 +2,7 @@ package ma.akwa.portalrh.admin.mapper;
 
 import ma.akwa.portalrh.admin.dto.AdminRequest;
 import ma.akwa.portalrh.admin.dto.AdminResponse;
-import ma.akwa.portalrh.admin.entities.Admin;
+import ma.akwa.portalrh.auth.entities.Admin;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
