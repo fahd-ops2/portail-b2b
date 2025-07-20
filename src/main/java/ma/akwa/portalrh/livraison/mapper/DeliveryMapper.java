@@ -25,12 +25,12 @@ public interface DeliveryMapper {
 
     // Custom mapping for orderId -> Order entity
     @Named("mapOrderIdToOrder")
-    default Order mapOrderIdToOrder(Long orderId) {
+    default Order mapOrderIdToOrder(String orderId) {
         if (orderId == null) {
             return null;
         }
         Order order = new Order();
-        order.setId(orderId);
+        order.setId(String.valueOf(orderId));
         return order;
     }
 

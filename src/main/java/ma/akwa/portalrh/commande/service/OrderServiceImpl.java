@@ -88,7 +88,7 @@ public class OrderServiceImpl implements OrderService{
 
     @Override
     @Transactional(readOnly = true)
-    public OrderResponseDTO getOrder(Long orderId) {
+    public OrderResponseDTO getOrder(String orderId) {
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new IllegalArgumentException("Commande non trouvée"));
         return orderMapper.toOrderResponseDTO(order);
@@ -96,7 +96,7 @@ public class OrderServiceImpl implements OrderService{
 
     @Override
     @Transactional
-    public OrderResponseDTO cancelOrder(Long orderId){
+    public OrderResponseDTO cancelOrder(String orderId){
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new IllegalArgumentException("Commande non trouvée"));
 
@@ -111,7 +111,7 @@ public class OrderServiceImpl implements OrderService{
 
     @Transactional
     @Override
-    public OrderResponseDTO updateStatus(Long orderId, OrderStatus newStatus) {
+    public OrderResponseDTO updateStatus(String orderId, OrderStatus newStatus) {
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new IllegalArgumentException("Commande non trouvée"));
 
