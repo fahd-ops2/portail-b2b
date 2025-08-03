@@ -12,7 +12,7 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addMapping("/**") // Allow all endpoints
                 .allowedOrigins("http://localhost:8089") // ou ton port React
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") // Allow all methods
-                .allowedHeaders("*") // Allow all headers
-                .allowCredentials(false); // Disable credentials for simplicity
+                .allowedHeaders("*")
+                .allowCredentials(true);
     }
 }

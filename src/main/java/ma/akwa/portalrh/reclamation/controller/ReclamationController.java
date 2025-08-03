@@ -31,7 +31,7 @@ public class ReclamationController {
     public ResponseEntity<ReclamationResponse> create(
             @Parameter(description = "Données du reclamation à créer", required = true)
             @RequestBody ReclamationRequest request) {
-        return ResponseEntity.ok(reclamationService.create(request));
+        return ResponseEntity.ok(reclamationService.create(request, null));
     }
 
     @Operation(summary = "Mettre à jour un produit existant")
@@ -46,7 +46,7 @@ public class ReclamationController {
             @PathVariable Long id,
             @Parameter(description = "Données mises à jour du reclamation", required = true)
             @RequestBody ReclamationRequest request) {
-        return ResponseEntity.ok(reclamationService.update(id, request));
+        return ResponseEntity.ok(reclamationService.update(id, request, null));
     }
 
     @DeleteMapping("/{id}")
@@ -82,7 +82,7 @@ public class ReclamationController {
             @Parameter(description = "Numéro de la page (0 = première page)", example = "0", required = true)
             @RequestParam int page) {
 
-        Pageable pageable = PageRequest.of(size, page);
+        Pageable pageable = PageRequest.of(page, size);
         return ResponseEntity.ok(reclamationService.getAllPaginated(pageable));
     }
 
