@@ -75,7 +75,7 @@ public class ReclamationController {
     @Operation(summary = "Récupérer une page des reclamations")
     @ApiResponse(responseCode = "200", description = "Liste paginée des reclamations récupérée avec succès")
     @GetMapping
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('CLIENT') or hasRole('ADMIN')")
     public ResponseEntity<Page<ReclamationResponse>> getAllPaginated(
             @Parameter(description = "Taille de la page", example = "10", required = true)
             @RequestParam int size,
