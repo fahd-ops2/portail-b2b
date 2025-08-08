@@ -12,4 +12,8 @@ public interface ReclamationService {
         void delete(Long id);
         ReclamationResponse getById(Long id);
         Page<ReclamationResponse> getAllPaginated(Pageable pageable);
+
+        Object create(ReclamationRequest request);
+
+        Object update(Long id, ReclamationRequest request);
 }

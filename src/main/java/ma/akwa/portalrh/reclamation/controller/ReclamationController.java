@@ -31,7 +31,7 @@ public class ReclamationController {
     public ResponseEntity<ReclamationResponse> create(
             @Parameter(description = "Données du reclamation à créer", required = true)
             @RequestBody ReclamationRequest request) {
-        return ResponseEntity.ok(reclamationService.create(request));
+        return ResponseEntity.ok((ReclamationResponse) reclamationService.create(request));
     }
 
     @Operation(summary = "Mettre à jour un produit existant")
@@ -46,7 +46,7 @@ public class ReclamationController {
             @PathVariable Long id,
             @Parameter(description = "Données mises à jour du reclamation", required = true)
             @RequestBody ReclamationRequest request) {
-        return ResponseEntity.ok(reclamationService.update(id, request));
+        return ResponseEntity.ok((ReclamationResponse) reclamationService.update(id, request));
     }
 
     @DeleteMapping("/{id}")

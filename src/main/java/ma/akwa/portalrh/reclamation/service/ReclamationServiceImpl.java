@@ -75,6 +75,16 @@ public class ReclamationServiceImpl implements ReclamationService {
         return reclamations.map(reclamationMapper::toResponse);
     }
 
+    @Override
+    public Object create(ReclamationRequest request) {
+        return null;
+    }
+
+    @Override
+    public Object update(Long id, ReclamationRequest request) {
+        return null;
+    }
+
     private String saveFile(MultipartFile file) {
         try {
             String uploadDir = "uploads/reclamations/";
