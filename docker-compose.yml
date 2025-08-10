@@ -17,7 +17,7 @@ services:
       - portal-network
 
   portalrh-app:
-    image: portalrh-app-image  # Remplace par le nom de ton image Docker Spring Boot
+    image: portalrh-app-image
     container_name: portalrh-app
     restart: on-failure
     ports:
@@ -26,8 +26,20 @@ services:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/portal_gaz_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: root
+      RECOMMENDATION_API_URL: http://recommendation-api:8000/recommend
     depends_on:
       - mysql
+      - recommendation-api
+    networks:
+      - portal-network
+
+  recommendation-api:
+    build:
+      context: ./recommendation-api
+    container_name: recommendation-api
+    restart: on-failure
+    ports:
+      - "8000:8000"
     networks:
       - portal-network
 

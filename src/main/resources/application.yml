@@ -34,5 +34,6 @@ spring:
   liquibase:
     enabled: false
 
-trackingmore:
-  api-key: VOTRE_CLÉ_API_TRACKINGMORE
+recommendation:
+  api:
+    url: http://recommendation-api:8000/recommend
