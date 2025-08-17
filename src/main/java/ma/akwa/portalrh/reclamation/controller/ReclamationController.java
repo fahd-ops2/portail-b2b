@@ -47,6 +47,7 @@ public class ReclamationController {
             @Parameter(description = "Données mises à jour du reclamation", required = true)
             @RequestBody ReclamationRequest request) {
         return ResponseEntity.ok((ReclamationResponse) reclamationService.update(id, request));
+
     }
 
     @DeleteMapping("/{id}")
@@ -75,14 +76,14 @@ public class ReclamationController {
     @Operation(summary = "Récupérer une page des reclamations")
     @ApiResponse(responseCode = "200", description = "Liste paginée des reclamations récupérée avec succès")
     @GetMapping
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('CLIENT') or hasRole('ADMIN')")
     public ResponseEntity<Page<ReclamationResponse>> getAllPaginated(
             @Parameter(description = "Taille de la page", example = "10", required = true)
             @RequestParam int size,
             @Parameter(description = "Numéro de la page (0 = première page)", example = "0", required = true)
             @RequestParam int page) {
 
-        Pageable pageable = PageRequest.of(size, page);
+        Pageable pageable = PageRequest.of(page, size);
         return ResponseEntity.ok(reclamationService.getAllPaginated(pageable));
     }
 

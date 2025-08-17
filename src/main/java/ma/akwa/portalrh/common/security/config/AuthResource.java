@@ -8,13 +8,18 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.GrantedAuthority;
+
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/auth")
@@ -28,7 +33,7 @@ public class AuthResource {
 
 
     @PostMapping("/authenticate")
-    public ResponseEntity<String> authenticate(@Valid @RequestBody AuthenticationRequest request) {
+    public ResponseEntity<?> authenticate(@Valid @RequestBody AuthenticationRequest request) {
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
@@ -40,8 +45,22 @@ public class AuthResource {
         }
 
         final UserDetails userDetails = userDao.findByEmail(request.getEmail());
-        return ResponseEntity.ok(jwtUtils.generateToken(userDetails));
+        final String token = jwtUtils.generateToken(userDetails);
+
+        // Extract roles
+        List<String> roles = userDetails.getAuthorities()
+                .stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.toList());
+
+        // Prepare response
+        Map<String, Object> response = new HashMap<>();
+        response.put("token", token);
+        response.put("roles", roles);
+
+        return ResponseEntity.ok(response);
     }
+
 
 
 }

@@ -87,7 +87,15 @@ CREATE TABLE reclamation (
     description VARCHAR(255),
     type VARCHAR(255),
     status VARCHAR(255),
-    date DATE
+    date DATE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NULL,
+    client_id BIGINT NOT NULL,
+    order_id BIGINT NOT NULL,
+    file_path VARCHAR(255) NULL,
+    resolution_notes VARCHAR(255) NULL,
+    CONSTRAINT fk_reclamation_orders FOREIGN KEY (order_id) REFERENCES orders(id),
+    CONSTRAINT fk_reclamation_client FOREIGN KEY (client_id) REFERENCES clients(id)
 );
 
 -- Table livraisons
