@@ -55,7 +55,7 @@ CREATE TABLE produits (
 
 -- Table orders
 CREATE TABLE orders (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    id VARCHAR(255) PRIMARY KEY,
     client_id BIGINT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     status VARCHAR(50) NOT NULL DEFAULT 'EN_ATTENTE',
@@ -70,8 +70,8 @@ CREATE TABLE orders (
 
 -- Table order_item
 CREATE TABLE order_item (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    order_id BIGINT NOT NULL,
+    id VARCHAR(255) PRIMARY KEY,
+    order_id VARCHAR(255) NOT NULL,
     produit_id VARCHAR(36) NOT NULL,
     quantity DOUBLE NOT NULL,
     unit_price DOUBLE NOT NULL,
@@ -91,7 +91,7 @@ CREATE TABLE reclamation (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NULL,
     client_id BIGINT NOT NULL,
-    order_id BIGINT NOT NULL,
+    order_id VARCHAR(255) NOT NULL,
     file_path VARCHAR(255) NULL,
     resolution_notes VARCHAR(255) NULL,
     CONSTRAINT fk_reclamation_orders FOREIGN KEY (order_id) REFERENCES orders(id),
@@ -101,7 +101,7 @@ CREATE TABLE reclamation (
 -- Table livraisons
 CREATE TABLE livraisons (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    order_id BIGINT NOT NULL,
+    order_id VARCHAR(255) NOT NULL,
     livreur_id BIGINT NOT NULL,
     scheduled_time TIMESTAMP NOT NULL,
     status VARCHAR(50) NOT NULL DEFAULT 'SCHEDULED',

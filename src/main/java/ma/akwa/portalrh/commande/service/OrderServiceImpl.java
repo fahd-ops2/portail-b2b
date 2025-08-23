@@ -43,6 +43,8 @@ public class OrderServiceImpl implements OrderService{
                 .orElseThrow(() -> new IllegalArgumentException("Client non trouvé"));
 
         Order order = orderMapper.toOrder(dto);
+        System.out.println(order.getId());
+
         order.setClient(client);
 
         if (Objects.isNull(dto.items())) {

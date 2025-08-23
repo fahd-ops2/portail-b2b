@@ -55,7 +55,7 @@ public class Order {
     @PrePersist
     public void generateId() {
         if (this.id == null) {
-            this.id = String.format("CMD-%s", UUID.randomUUID().toString().substring(0, 8));
+            this.id = UUID.randomUUID().toString();
         }
     }
 }
