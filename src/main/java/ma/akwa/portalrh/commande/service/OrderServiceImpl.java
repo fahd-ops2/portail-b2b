@@ -37,15 +37,16 @@ public class OrderServiceImpl implements OrderService{
     @Override
     @Transactional
     public OrderResponseDTO createOrder(OrderRequestDTO dto){
-        // Valider le client
+
+        System.out.println(dto);
         Client client = clientRepository.findById(dto.clientId())
                 .orElseThrow(() -> new IllegalArgumentException("Client non trouvé"));
 
-        // Mapper le DTO vers l'entité
         Order order = orderMapper.toOrder(dto);
+        System.out.println(order.getId());
+
         order.setClient(client);
 
-        // Valider et configurer les OrderItems
         if (Objects.isNull(dto.items())) {
             order.setItems(Collections.emptyList());
         }
@@ -57,22 +58,19 @@ public class OrderServiceImpl implements OrderService{
 
             item.setProduit(produit);
             item.setOrder(order);
-            item.setUnitPrice((double) produit.getPrixUnitaire()); // Suppose que Produit a une méthode getPrix()
+            item.setUnitPrice((double) produit.getPrixUnitaire());
             item.setSubtotal(item.getQuantity() * item.getUnitPrice());
 
         }
 
-        // Calculer total_amount
         order.setTotalAmount(order.getItems().stream()
                 .mapToDouble(OrderItem::getSubtotal)
                 .sum());
 
-        // Définir le statut par défaut si non fourni
         if (Objects.isNull(order.getStatus())) {
             order.setStatus(OrderStatus.EN_ATTENTE);
         }
 
-        // Sauvegarder la commande
         Order savedOrder = orderRepository.save(order);
         return orderMapper.toOrderResponseDTO(savedOrder);
 

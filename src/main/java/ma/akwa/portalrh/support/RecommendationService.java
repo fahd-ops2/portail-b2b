@@ -22,6 +22,8 @@ public class RecommendationService {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
+
+        
         HttpEntity<RecommendationRequest> entity = new HttpEntity<>(request, headers);
 
         ResponseEntity<RecommendationResponse> response = restTemplate.exchange(

@@ -26,7 +26,6 @@ import ma.akwa.portalrh.common.enums.Role;
         @NotNull
         private String email;
 
-        @NotNull
         private String address;
 
         @NotNull
