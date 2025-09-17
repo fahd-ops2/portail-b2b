@@ -11,35 +11,38 @@ import org.mapstruct.*;
 public interface DeliveryMapper {
 
     // Map from DeliveryRequest to Delivery entity
-    @Mapping(target = "id", ignore = true) // ID auto-généré
+    @Mapping(target = "id", ignore = true)
     @Mapping(target = "order", source = "orderId", qualifiedByName = "mapOrderIdToOrder")
     @Mapping(target = "livreur", source = "livreurId", qualifiedByName = "mapLivreurIdToLivreur")
+    @Mapping(target = "scheduledTime", source = "scheduledTime")
     @Mapping(target = "status", source = "status")
+    @Mapping(target = "deliveryAddress", source = "deliveryAddress")
+    @Mapping(target = "notes", source = "notes")
+    @Mapping(target = "isUrgent", source = "isUrgent")
     Delivery toEntity(DeliveryRequest request);
 
     // Map from Delivery entity to DeliveryResponse
     @Mapping(source = "order.id", target = "orderId")
     @Mapping(source = "livreur.id", target = "livreurId")
+    @Mapping(source = "scheduledTime", target = "scheduledTime")
     @Mapping(source = "status", target = "status")
+    @Mapping(source = "deliveryAddress", target = "deliveryAddress")
+    @Mapping(source = "notes", target = "notes")
+    @Mapping(source = "deliveredAt", target = "deliveredAt")
+    @Mapping(source = "isUrgent", target = "isUrgent")
     DeliveryResponse toResponse(Delivery delivery);
 
-    // Custom mapping for orderId -> Order entity
     @Named("mapOrderIdToOrder")
     default Order mapOrderIdToOrder(String orderId) {
-        if (orderId == null) {
-            return null;
-        }
+        if (orderId == null) return null;
         Order order = new Order();
-        order.setId(String.valueOf(orderId));
+        order.setId(orderId);
         return order;
     }
 
-    // Custom mapping for livreurId -> Livreur entity
     @Named("mapLivreurIdToLivreur")
     default Livreur mapLivreurIdToLivreur(Long livreurId) {
-        if (livreurId == null) {
-            return null;
-        }
+        if (livreurId == null) return null;
         Livreur livreur = new Livreur();
         livreur.setId(livreurId);
         return livreur;

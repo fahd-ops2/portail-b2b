@@ -8,7 +8,6 @@ import java.util.List;
 
 public record OrderRequestDTO(
         long clientId,
-        String deliveryAddress,
         LocalDateTime scheduledFor,
         String note,
         LocalDateTime deliveredAt,
@@ -16,7 +15,6 @@ public record OrderRequestDTO(
         OrderStatus status,
         List<OrderLineDTO> items
 ) {
-
     public OrderRequestDTO {
         if (clientId <= 0) {
             throw new IllegalArgumentException("Client ID must be positive");

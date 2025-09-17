@@ -21,10 +21,13 @@ VALUES (3, '0701020304', TRUE);
 
 
 -- Insert produits
-INSERT INTO produits (id, nom, prix_unitaire, stock,description,type,image) VALUES
-(1, 'Bouteille de Propane', 50.0, 100 ,  'Bouteille de propane de haute qualité pour usage industriel','PROPANE','https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=300&h=200&fit=crop'''),
-(2, 'Gaz Cylinder 12kg', 100.0, 50, 'Bouteille de butane standard pour applications commerciales', 'PROPANE','https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=300&h=200&fit=crop'''),
-(3, 'Gaz Cylinder 20kg', 150.0, 20,'fref','BUTANE','https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=300&h=200&fit=crop''');
+INSERT INTO produits (id, nom, prix_unitaire, stock, description, type, image) VALUES
+                (1, 'Gaz Cylinder 12kg', 50.0, 100, 'Bouteille de butane de haute qualité pour usage industriel', 'BUTANE', 'https://i.ibb.co/qYKmPhWy/Butan2.jpg'),
+                (2, 'Gaz Cylinder 12kg', 100.0, 50, 'Bouteille de butane standard pour applications commerciales', 'PROPANE', 'https://i.ibb.co/G44mF0JF/Cylind12-5.jpg'),
+                (4, 'Gaz Cylinder 12kg', 100.0, 50, 'Bouteille de butane standard pour applications commerciales', 'BUTANE', 'https://i.ibb.co/jPwGzrWb/12afr-Butan.jpg'),
+                (3, 'Gaz Cylinder 6kg', 150.0, 20, 'Bouteille de butane de 6kg pour usage domestique ou commercial', 'BUTANE', 'https://i.ibb.co/dsH4czqz/cylind-6kg.jpg'),
+                (5, 'Bouteille de Propane 34kg', 50.0, 100, 'Bouteille de propane de haute qualité pour usage industriel', 'PROPANE', 'https://i.ibb.co/RTnd5sfk/prp35kg.jpg'),
+                (6, 'Bouteille de Propane 13kg', 50.0, 100, 'Bouteille de propane de haute qualité pour usage industriel', 'PROPANE', 'https://i.ibb.co/C3HWq2MK/prop13kg.jpg');
 
 
 -- Insert orders

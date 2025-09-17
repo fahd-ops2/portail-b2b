@@ -10,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import ma.akwa.portalrh.common.enums.DeliveryStatus;
 import ma.akwa.portalrh.livraison.dto.DeliveryRequest;
 import ma.akwa.portalrh.livraison.dto.DeliveryResponse;
-
 import ma.akwa.portalrh.livraison.service.DeliveryService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,8 +17,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
-
 
 @RestController
 @RequestMapping("/api/v1/deliveries")
@@ -94,6 +91,36 @@ public class DeliveryController {
         return ResponseEntity.ok(deliveryService.getAllPaginated(pageable));
     }
 
+    @Operation(summary = "Récupérer les livraisons par statut")
+    @ApiResponse(responseCode = "200", description = "Liste des livraisons pour le statut spécifié")
+    @GetMapping("/by-status")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('LIVREUR')")
+    public ResponseEntity<Page<DeliveryResponse>> getByStatus(
+            @Parameter(description = "Statut de la livraison", required = true)
+            @RequestParam DeliveryStatus status,
+            @Parameter(description = "Taille de la page", example = "10", required = true)
+            @RequestParam int size,
+            @Parameter(description = "Numéro de la page (0 = première page)", example = "0", required = true)
+            @RequestParam int page) {
+        Pageable pageable = PageRequest.of(page, size);
+        return ResponseEntity.ok(deliveryService.getByStatus(status, pageable));
+    }
+
+    @Operation(summary = "Rechercher des livraisons par ID de commande ou adresse")
+    @ApiResponse(responseCode = "200", description = "Liste paginée des livraisons correspondant aux critères de recherche")
+    @GetMapping("/search")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('LIVREUR')")
+    public ResponseEntity<Page<DeliveryResponse>> searchDeliveries(
+            @Parameter(description = "Terme de recherche (ID de commande ou adresse)", required = false)
+            @RequestParam(required = false) String searchTerm,
+            @Parameter(description = "Taille de la page", example = "10", required = true)
+            @RequestParam int size,
+            @Parameter(description = "Numéro de la page (0 = première page)", example = "0", required = true)
+            @RequestParam int page) {
+        Pageable pageable = PageRequest.of(page, size);
+        return ResponseEntity.ok(deliveryService.searchDeliveries(searchTerm, pageable));
+    }
+
     @Operation(summary = "Mettre à jour le statut d'une livraison")
     @ApiResponses({
             @ApiResponse(responseCode = "204", description = "Statut de la livraison mis à jour avec succès"),
@@ -104,7 +131,7 @@ public class DeliveryController {
     public ResponseEntity<Void> updateDeliveryStatus(
             @Parameter(description = "ID de la livraison à mettre à jour", required = true)
             @PathVariable Long id,
-            @Parameter(description = "Numéro de suivi de la livraison", required = true)
+            @Parameter(description = "Nouveau statut de la livraison", required = true)
             @RequestParam DeliveryStatus status) {
         deliveryService.updateDeliveryStatus(id, status);
         return ResponseEntity.noContent().build();
