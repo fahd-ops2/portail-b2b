@@ -82,21 +82,20 @@ CREATE TABLE order_item (
 );
 
 -- Table reclamation
-CREATE TABLE reclamation (
+CREATE TABLE IF NOT EXISTS reclamation (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    description VARCHAR(255),
-    type VARCHAR(255),
-    status VARCHAR(255),
-    date DATE,
+    description TEXT NOT NULL,
+    type VARCHAR(50) NOT NULL,
+    status VARCHAR(50) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NULL,
     client_id BIGINT NOT NULL,
     order_id VARCHAR(255) NOT NULL,
     file_path VARCHAR(255) NULL,
-    resolution_notes VARCHAR(255) NULL,
+    resolution_notes TEXT NULL,
     CONSTRAINT fk_reclamation_orders FOREIGN KEY (order_id) REFERENCES orders(id),
     CONSTRAINT fk_reclamation_client FOREIGN KEY (client_id) REFERENCES clients(id)
-);
+    );
 
 -- Table livraisons
 CREATE TABLE livraisons (

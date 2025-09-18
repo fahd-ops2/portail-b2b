@@ -7,6 +7,7 @@ import lombok.*;
 import ma.akwa.portalrh.commande.entities.Order;
 import ma.akwa.portalrh.client.entities.Client;
 import ma.akwa.portalrh.common.enums.ReclamationStatus;
+import ma.akwa.portalrh.common.enums.TypeRc;
 
 import java.time.LocalDateTime;
 
@@ -37,9 +38,10 @@ public class Reclamation {
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    @NotBlank(message = "Le type de réclamation ne peut pas être vide")
+    @NotNull(message = "Le type de réclamation ne peut pas être nul")
+    @Enumerated(EnumType.STRING)
     @Column
-    private String type;
+    private TypeRc type;
 
     @Enumerated(EnumType.STRING)
     @NotNull(message = "Le statut ne peut pas être nul")
@@ -57,7 +59,7 @@ public class Reclamation {
     private String resolutionNotes;
 
     @Column
-    private String filePath; // Champ pour stocker le chemin du fichier
+    private String filePath;
 
     @PrePersist
     public void onCreate() {

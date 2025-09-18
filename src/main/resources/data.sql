@@ -40,11 +40,10 @@ INSERT INTO order_item ( id , order_id, produit_id, quantity, unit_price, subtot
 ( 'b5467f6a-fa47-441c-a7b6-cf5985780089', 'a5467f6a-fa47-441c-a7b6-cf5985780089', 1, 2, 50.0, 100.0, 'Handle with care'),
 ( 'b5467f6a-fa47-441c-a7b6-cf5985780087', 'a5467f6a-fa47-441c-a7b6-cf5985780089', 3, 1, 150.0, 150.0, ''),
 ( 'b5467f6a-fa47-441c-a7b6-cf5985780088', 'a5467f6a-fa47-441c-a7b6-cf5985780088', 2, 1, 100.0, 100.0, 'Fragile item');
-
---insert reclamation
-INSERT INTO reclamation(id,description,type, status, date, client_id, order_id) VALUES
-(1,'Le produit reçu est endommagé à louverture','Produit défectueux','EN_ATTENTE','2025-06-06', 2, 'a5467f6a-fa47-441c-a7b6-cf5985780089'),
-(2, 'Livraison retardée de 5 jours par rapport à la date prévue', 'Délai de livraison','EN_ATTENTE','2025-06-02', 2, 'a5467f6a-fa47-441c-a7b6-cf5985780088');
+-- Insert into reclamation
+INSERT INTO reclamation (id, description, type, status, created_at, client_id, order_id, file_path, resolution_notes) VALUES
+                (1, 'Le produit reçu est endommagé à l''ouverture', 'QUALITE', 'EN_ATTENTE', '2025-06-06 10:00:00', 2, 'a5467f6a-fa47-441c-a7b6-cf5985780089', NULL, NULL),
+                (2, 'Livraison retardée de 5 jours par rapport à la date prévue', 'LIVRAISON', 'EN_ATTENTE', '2025-06-02 14:30:00', 2, 'a5467f6a-fa47-441c-a7b6-cf5985780088', NULL, NULL);
 
 -- Insérer des livraisons
 INSERT INTO livraisons (order_id, livreur_id, scheduled_time, status, delivery_address, notes, tracking_code, latitude, longitude, is_urgent) VALUES

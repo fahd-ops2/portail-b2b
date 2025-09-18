@@ -17,10 +17,9 @@ public class ReclamationRequest {
     private String description;
 
     @NotBlank(message = "Le type de réclamation ne peut pas être vide")
-    private String type;
+    private String type; // String dans le DTO, converti en TypeRc dans le mapper
 
-    @NotNull(message = "Le statut ne peut pas être nul")
-    private ReclamationStatus status;
+    private ReclamationStatus status; // Optionnel, défaut EN_ATTENTE dans l'entité
 
     @NotBlank(message = "L'identifiant de la commande ne peut pas être vide")
     private String orderId;
@@ -30,6 +29,5 @@ public class ReclamationRequest {
 
     private String resolutionNotes;
 
-    @NotNull(message = "La date de création ne peut pas être nulle")
-    private LocalDate date;
+    private LocalDate date; // Optionnel, défini à LocalDate.now() si null
 }
