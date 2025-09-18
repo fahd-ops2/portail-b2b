@@ -12,6 +12,7 @@ import java.time.LocalDate;
 
 public interface ReclamationService {
         ReclamationResponse create(ReclamationRequest request, MultipartFile file);
+        ReclamationResponse create(ReclamationRequest request);
         ReclamationResponse update(Long id, ReclamationRequest request, MultipartFile file);
         void delete(Long id);
         ReclamationResponse getById(Long id);

@@ -1,6 +1,9 @@
 package ma.akwa.portalrh.reclamation.service;
 
 import lombok.AllArgsConstructor;
+import ma.akwa.portalrh.commande.entities.Order;
+import ma.akwa.portalrh.commande.repository.OrderRepository;
+import ma.akwa.portalrh.commande.service.OrderService;
 import ma.akwa.portalrh.common.enums.ReclamationStatus;
 import ma.akwa.portalrh.common.enums.TypeRc;
 import ma.akwa.portalrh.reclamation.dto.ReclamationRequest;
@@ -30,6 +33,7 @@ public class ReclamationServiceImpl implements ReclamationService {
     private static final Logger logger = LoggerFactory.getLogger(ReclamationServiceImpl.class);
     private final ReclamationRepository reclamationRepository;
     private final ReclamationMapper reclamationMapper;
+    private final OrderRepository orderRepository;
 
     @Override
     public ReclamationResponse create(ReclamationRequest request, MultipartFile file) {
@@ -50,6 +54,25 @@ public class ReclamationServiceImpl implements ReclamationService {
             reclamation.setFilePath(filePath);
             logger.debug("Fichier enregistré pour la réclamation: {}", filePath);
         }
+
+        Reclamation createdReclamation = reclamationRepository.save(reclamation);
+        logger.info("Réclamation créée avec l'ID: {}", createdReclamation.getId());
+        return reclamationMapper.toResponse(createdReclamation);
+    }
+
+    @Override
+    public ReclamationResponse create(ReclamationRequest request) {
+        logger.info("Création d'une nouvelle réclamation pour le client ID: {}", request.getClientId());
+        validateReclamationRequest(request);
+
+        if (request.getStatus() == null) {
+            request.setStatus(ReclamationStatus.EN_ATTENTE);
+        }
+        if (request.getDate() == null) {
+            request.setDate(LocalDate.now());
+        }
+
+        Reclamation reclamation = reclamationMapper.toEntity(request);
 
         Reclamation createdReclamation = reclamationRepository.save(reclamation);
         logger.info("Réclamation créée avec l'ID: {}", createdReclamation.getId());

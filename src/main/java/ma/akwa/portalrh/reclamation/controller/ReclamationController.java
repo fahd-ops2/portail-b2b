@@ -37,14 +37,17 @@ public class ReclamationController {
             @ApiResponse(responseCode = "400", description = "Données de la requête invalides ou fichier trop volumineux"),
             @ApiResponse(responseCode = "404", description = "Commande ou client non trouvé")
     })
-    @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     @PreAuthorize("hasRole('CLIENT')")
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ReclamationResponse> create(
             @Parameter(description = "Données de la réclamation à créer (JSON)", required = true)
-            @RequestPart("request") @Valid ReclamationRequest request,
-            @Parameter(description = "Fichier associé (optionnel)")
-            @RequestPart(value = "file", required = false) MultipartFile file) {
-        return ResponseEntity.ok(reclamationService.create(request, file));
+            @RequestBody @Valid ReclamationRequest request
+            //@Parameter(description = "Fichier associé (optionnel)")
+            //@RequestPart(value = "file", required = false) MultipartFile file
+    ) {
+        return ResponseEntity.ok(reclamationService.create(request
+                //,file
+        ));
     }
 
     @Operation(summary = "Mettre à jour une réclamation existante")

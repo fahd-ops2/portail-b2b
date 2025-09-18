@@ -63,6 +63,7 @@ public class Reclamation {
 
     @PrePersist
     public void onCreate() {
+        this.status = ReclamationStatus.EN_ATTENTE;
         this.createdAt = LocalDateTime.now();
     }
 

@@ -126,6 +126,7 @@ public class DeliveryController {
             @ApiResponse(responseCode = "204", description = "Statut de la livraison mis à jour avec succès"),
             @ApiResponse(responseCode = "404", description = "Livraison non trouvée")
     })
+
     @PutMapping("/{id}/status")
     @PreAuthorize("hasRole('ADMIN') or hasRole('LIVREUR')")
     public ResponseEntity<Void> updateDeliveryStatus(
